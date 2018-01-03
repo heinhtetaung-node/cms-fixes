@@ -24,11 +24,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('assets/css/smartadmin-rtl.min.css') }}">
 
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('assets/css/demo.min.css') }}">
-    
+
     <link rel="shortcut icon" href="{{ asset('images/demo/logo.jpeg') }}" type="image/jpeg">
     <link rel="icon" href="{{ asset('images/demo/logo.jpeg') }}" type="image/jpeg">
- 
+
     <script src="{{ asset('assets/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/custom_field.js') }}"></script>
 
     <!-- ### link summernote for text editor### -->
     <link href="{{ asset('summernote/dist/summernote.css') }}" rel="stylesheet">
@@ -43,7 +44,6 @@
     .navbar-default a{
         color:#D8D00D !important;
     }
-    
     aside{
       background: linear-gradient(to right,#9b0c15 93%,#82050b 100%);
     }
@@ -59,8 +59,8 @@
       background-color:#82050b;
     }
     </style>
-    @show 
-    
+    @show
+
 </head>
 <body>
   <!-- HEADER -->
@@ -104,7 +104,7 @@
         <span> Last updated on: 12/12/2013 9:43AM
           <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
             <i class="fa fa-refresh"></i>
-          </button> 
+          </button>
         </span>
         <!-- end footer -->
 
@@ -113,24 +113,24 @@
     </div>
 
     <!-- projects dropdown -->
-    
+
     <!-- end projects dropdown -->
 
     <!-- pulled right: nav area -->
     <div class="pull-right">
-      
+
       <!-- collapse menu button -->
       <div id="hide-menu" class="btn-header pull-right">
         <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
       </div>
       <!-- end collapse menu -->
-      
+
       <!-- #MOBILE -->
       <!-- Top menu profile link : this shows only when top menu is active -->
       <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
         <li class="">
-          <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
-            <img src="assets/img/avatars/sunny.png" alt="John Doe" class="online" />  
+          <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
+            <img src="assets/img/avatars/sunny.png" alt="John Doe" class="online" />
           </a>
           <ul class="dropdown-menu pull-right">
             <li>
@@ -195,10 +195,10 @@
         <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
       </div>
       <!-- end fullscreen button -->
-      
+
       <!-- #Voice Command: Start Speech -->
       <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
-        <div> 
+        <div>
           <div class="popover bottom"><div class="arrow"></div>
             <div class="popover-content">
               <h4 class="vc-title">Voice command activated <br><small>Please speak clearly into the mic</small></h4>
@@ -207,8 +207,8 @@
                 <br><small class="txt-color-red">Must <strong>"Allow"</strong> Microphone</small>
                 <br><small class="txt-color-red">Must have <strong>Internet Connection</strong></small>
               </h4>
-              <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">See Commands</a> 
-              <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">Close Popup</a> 
+              <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">See Commands</a>
+              <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">Close Popup</a>
             </div>
           </div>
         </div>
@@ -237,10 +237,10 @@
             </li>
             <li>
               <a href="javascript:void(0);"><img src="assets/img/blank.gif" class="flag flag-cn" alt="China"> 中文</a>
-            </li> 
+            </li>
             <li>
               <a href="javascript:void(0);"><img src="assets/img/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
-            </li> 
+            </li>
             <li>
               <a href="javascript:void(0);"><img src="assets/img/blank.gif" class="flag flag-pt" alt="Portugal"> Portugal</a>
             </li>
@@ -249,8 +249,8 @@
             </li>
             <li>
               <a href="javascript:void(0);"><img src="assets/img/blank.gif" class="flag flag-kr" alt="Korea"> 한국어</a>
-            </li>           
-            
+            </li>
+
           </ul>
         </li>
       </ul>
@@ -268,13 +268,13 @@
 
     <!-- User info -->
     <div class="login-info">
-      <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+      <span> <!-- User image size is adjusted inside CSS, it should stay as it -->
         <a href="{{ route('admin.index') }}">
           <img src="{{ asset('images/logo.png') }}">
           <span style="">
             Admin
           </span>
-        </a> 
+        </a>
       </span>
     </div>
     <!-- end user info -->
@@ -294,13 +294,18 @@
         <li class="">
           <a href="{{ route('admin.gallery') }}" title="Gallery"><i class="glyphicon glyphicon-picture"></i> <span class="menu-item-parent">Gallery</span></a>
         </li>
+
+        <li class="{{ route('admin.custom_field') }}">
+          <a href="{{route('admin.custom_field')}}" title="Custom Field"><i class="glyphicon glyphicon-pushpin"></i> <span class="menu-item-parent">Custom Field</span></a>
+        </li>
+
         <li class="">
           <a href="{{ route('admin.student') }}" title="ကြန္ပ်ဴတသင္တန္းသားမ်ား"><i class="fa fa-user"></i> <span class="menu-item-parent">ကြန္ပ်ဴတသင္တန္းသားမ်ား</span></a>
         </li>
         <li class="">
           <a href="{{ route('admin.sarthinthar') }}" title="စာသင္သားသံဃာမ်ား"><i class="fa fa-user"></i> <span class="menu-item-parent">စာသင္သားသံဃာမ်ား</span></a>
         </li>
-       
+
         <li class="">
           <a href="{{ route('admin.people') }}" title="တရားပဲြပင့္ေလွ်ာက္သူမ်ား"><i class="fa fa-user"></i> <span class="menu-item-parent">တရားပဲြပင့္ေလွ်ာက္သူမ်ား</span></a>
         </li>
@@ -314,31 +319,29 @@
 
         <li class="{{ route('admin.user') }}">
           <a href="user" title="User"><i class="fa fa-user"></i> <span class="menu-item-parent">User</span></a>
-        </li> 
-        
+        </li>
+
       </ul>
     </nav>
-    <span class="minifyme" data-action="minifyMenu"> 
-      <i class="fa fa-arrow-circle-left hit"></i> 
+    <span class="minifyme" data-action="minifyMenu">
+      <i class="fa fa-arrow-circle-left hit"></i>
     </span>
 
   </aside>
-  
 
-  
+
+
   <div id="main" role="main">
     <!-- <div id="ribbon">
-      <span class="ribbon-button-alignment"> 
+      <span class="ribbon-button-alignment">
         <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
           <i class="fa fa-refresh"></i>
-        </span> 
+        </span>
       </span>
-
       <ol class="breadcrumb" ng-bind-html="ribbontitle | rawHtml">
-        
       </ol>
     </div> -->
-    
+
     <!-- <div id="content" style="padding: 10px 14px;" ng-show='isViewLoading'>
       <div class="row">
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
@@ -346,12 +349,12 @@
         </div>
       </div>
     </div> -->
-    
+
     @yield('content')
-    
+
   </div>
 
-  
+
   <!-- END MAIN PANEL -->
 
   <!-- PAGE FOOTER -->
@@ -364,7 +367,7 @@
       <div class="col-xs-6 col-sm-6 text-right hidden-xs">
         <div class="txt-color-white inline-block">
           <i class="txt-color-blueLight hidden-mobile">Developed By <strong>5pro IT Solution &nbsp;</strong> </i>
-          
+
         </div>
       </div>
     </div>
@@ -412,6 +415,3 @@
 
 </body>
 </html>
-
-
-
