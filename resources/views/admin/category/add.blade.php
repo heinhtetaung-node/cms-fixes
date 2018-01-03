@@ -11,7 +11,7 @@
 		<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
 		<label>Insert category</label>
 		<input type="text" class="form-control name" style="width: 200px;"><br>
-		<select class="form-control parent_category" style="width:400px;">
+		<select class="form-control parent_category" style="width:200px;">
 			<option>Please select parent category</option>
 			{!! CategoriesFunctions::parent_categories(); !!}
 		</select>
@@ -24,21 +24,21 @@
 			$sub_val=0;
 		});
 
-		$(".parent_category").change(function(){	
-				$sub_val=$(this).val();		
-				$val=$(this).val();	
+		$(".parent_category").change(function(){
+				$sub_val=$(this).val();
+				$val=$(this).val();
 				jQuery.ajax({
 					url : "sub_cat/"+$val,
 					type : "GET",
 					dataType : "html",
-					success: function(data){ 
-						$('.sub_cat').html(data);						
+					success: function(data){
+						$('.sub_cat').html(data);
 						$(".sub_categories").change(function(){
 							$sub_val=$(this).val();
-						});		 
-					}	   
+						});
+					}
 				});
-		});			
+		});
 
 		jQuery(".product_save").click(function(){
 			jQuery.ajax({
@@ -46,7 +46,7 @@
 					type : "POST",
 					data : {parent_cat : $sub_val,name : $('.name').val(), _token : $('#ctr_token').val() },
 					dataType: "json",
-			   
+
 			});
 		});
 	</script>
@@ -55,4 +55,4 @@
 
 @section('scripts')
 @parent
-<!-- your custom script 
+<!-- your custom script

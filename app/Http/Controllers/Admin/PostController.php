@@ -249,7 +249,7 @@ class PostController extends Controller
         $cfl_group_id=$request['acf_group'];
         $group['cfl_group_id']=$cfl_group_id;
         $group['post_id']=$id;
-        
+
          if ($request['acf_group']==0) {
               CustomFieldValue::where('post_id',$id)->delete();
          }
@@ -335,6 +335,7 @@ class PostController extends Controller
     public function search(Request $request)
     {
         $input = $request->all();
+        dd($input);
         $posts = new Post(); // for_ASO to check fixes this is more better in filter
         $subcat = array();
         if($request->get('search')){

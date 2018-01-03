@@ -22,7 +22,7 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="page-title txt-color-blueDark"><i class="fa fa-list-ul"></i> Post List</h1>
-			</div>	
+			</div>
 		</div>
 
 
@@ -31,33 +31,37 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 				<div class="form-group col-md-3">
 				    <div class="input-group">
 				        <input type="text" class="form-control" name="search"
-				            placeholder="Search" value="{{ (isset($_GET['search']))? $_GET['search'] : '' }}"> 
+				            placeholder="Search" value="{{ (isset($_GET['search']))? $_GET['search'] : '' }}">
 				        </span>
 				    </div>
 				</div>
 				<div class="form-group col-md-3">
-			    	<select id="ctr_parent_id" class="form-control" name="category_id">
+			    	<!-- <select id="ctr_parent_id" class="form-control" name="category_id">
                         <option value="">Select Category</option>
                         @foreach($cat as $key=>$value)
                             <option {{ ($category_id==$key) ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                         @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                	<select id="ctr_sub_id" class="form-control" name="sub_category_id">
+           </select> -->
+           <select class="form-control parent_category">
+           			  <option>Please select parent category</option>
+           			{!! CategoriesFunctions::parent_categories(); !!}
+       		 </select>
+        </div>
+                <div class="form-group col-md-3 sub_cat" style="margin-top:-1px;">
+                	<!-- <select id="ctr_sub_id" class="form-control" name="sub_category_id">
                         <option value="">Select Sub Category</option>
                         @foreach($subcat as $sc)
                             <option {{ (isset($sub_category_id))? ($sub_category_id==$sc->id)? 'selected' : '' : '' }} value="{{ $sc->id }}">{{ $sc->title }}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group col-md-3">
-                	<input type="submit" value="Search" name="Search" class="btn btn-success"> 
+                	<input type="submit" value="Search" name="Search" class="btn btn-success">
                 </div>
-			</form>			
-			
+			</form>
+
 			<div class="col-md-6">
-								
+
 			</div>
 			 <!-- for success message -->
             @if ($message = Session::get('success'))
@@ -65,17 +69,17 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
                   <p>{{ $message }}</p>
               </div>
              @endif
-			<table class="table table-striped table-bordered table-hover"> 
+			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<td width="40px;">NO</td>
 						<td width="700px;">Name</td>
 						<td><input type="submit" class="btn btn-xs btn-default" onclick="window.location.href='{{ route('admin.post.create') }}'" value="Add New" ></td>
-					</tr>					
+					</tr>
 				</thead>
 				<tbody>
 					<?php $i=1 ?>
-					@foreach($posts as $post)			
+					@foreach($posts as $post)
 					<tr>
 						<td>{{$i++}}</td>
 						<td>
@@ -90,7 +94,7 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 				</tbody>
 			</table>
 		</div>
-		
+
 	</div>
 
 	@if(!isset($_GET['search']))
@@ -99,13 +103,35 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 		{!! $posts->appends(['search' => $_GET['search'], 'category_id' => $category_id, 'sub_category_id' => $sub_category_id])->render() !!}
 	@endif
 
-	<input type="hidden" id="ctr_tocken" value="{{ csrf_token() }}" /> 
+	<input type="hidden" id="ctr_tocken" value="{{ csrf_token() }}" />
 </div>
 @endsection
 
 @section('scripts')
 @parent
+<!-- <script type="text/javascript" src="{{ asset('js/getsubfrommain.js') }}"></script> -->
+<script type="text/javascript">
+$(document).ready(function(){
+  $sub_val=0;
+});
 
-<script type="text/javascript" src="{{ asset('js/getsubfrommain.js') }}"></script>
+$(".parent_category").change(function(){
+    $sub_val=$(this).val();
+    $val=$(this).val();
+    jQuery.ajax({
+      url : "sub_cat/"+$val,
+      type : "GET",
+      dataType : "html",
+      success: function(data){
+        $('.sub_cat').html(data);
+        $(".sub_categories").change(function(){
+          $sub_val=$(this).val();
+          // var sub_cat_style = $('.sub_categories').css( 'width','195px', 'important');
+
+        });
+      }
+    });
+});
+</script>
 
 @endsection
