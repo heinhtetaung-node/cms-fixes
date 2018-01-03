@@ -335,7 +335,7 @@ class PostController extends Controller
     public function search(Request $request)
     {
         $input = $request->all();
-        dd($input);
+        //dd($input);
         $posts = new Post(); // for_ASO to check fixes this is more better in filter
         $subcat = array();
         if($request->get('search')){

@@ -36,13 +36,13 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 				    </div>
 				</div>
 				<div class="form-group col-md-3">
-			    	<!-- <select id="ctr_parent_id" class="form-control" name="category_id">
+			    	<!-- <select id="ctr_parent_id" class="form-control" >
                         <option value="">Select Category</option>
                         @foreach($cat as $key=>$value)
                             <option {{ ($category_id==$key) ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                         @endforeach
            </select> -->
-           <select class="form-control parent_category">
+           <select class="form-control parent_category" name="category_id" >
            			  <option>Please select parent category</option>
            			{!! CategoriesFunctions::parent_categories(); !!}
        		 </select>
