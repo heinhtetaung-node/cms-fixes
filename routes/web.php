@@ -26,11 +26,21 @@ Route::group(['prefix' => 'admin'], function(){
 ################################################################################################################################################################
 		//Route::get('/', 'HomeController@index')->name('Admin Home');
 		Route::get('/', ['as' => 'admin.index', 'uses' => 'CategoryController@index']);
+
 		Route::get('/category', ['as' => 'admin.category', 'uses' => 'CategoryController@index']);
+
 		Route::get('/category/create', ['as' => 'admin.category.create', 'uses' => 'CategoryController@create']);
-		Route::post('/category/create', ['as' => 'admin.category.store', 'uses' => 'CategoryController@store']);
-		Route::post('/category/{id}/edit', ['as' => 'admin.category.edit', 'uses' => 'CategoryController@update']);
-		Route::get('/category/{id}/delete', ['as' => 'admin.category.delete', 'uses' => 'CategoryController@delete']);
+
+		Route::get('/sub_cat/{id}',['as' => 'admin.category.subcat', 'uses' =>'CategoryController@sub_cat']);
+
+		Route::post('/category/create', ['as' => 'admin.category.store', 'uses' => 'CategoryController@save']);
+
+		Route::get('/category/edit/{id}', ['as' => 'admin.category.edit', 'uses' => 'CategoryController@edit']);
+
+		Route::post('/category/update', ['as' => 'admin.category.edit', 'uses' => 'CategoryController@update']);
+
+		Route::get('/category/delete/{id}', ['as' => 'admin.category.delete', 'uses' => 'CategoryController@delete']);
+
 #########################################################################################
 		//post route
 		Route::get('/post', ['as' => 'admin.post', 'uses' => 'PostController@index']);
