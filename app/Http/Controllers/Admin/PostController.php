@@ -210,9 +210,9 @@ class PostController extends Controller
         $posts = Post::find($id);
         $cat = Category::where('parent_id', '0')->orderBy('parent_id', 'asc')->get();
         $subcat = Category::where('parent_id','!=', '0')->orderBy('parent_id', 'asc')->get();
+
         $cf_values=CustomFieldValue::where('post_id',$id)->first();
         $cf_details=CustomFieldDetail::where('post_id',$id)->get();
-
         $cf_lists=CustomField::all();
         $cfl_group_id=$cf_values['cfl_group_id'];
         $get_group_id=CustomField::where('id',$cfl_group_id);
@@ -224,13 +224,20 @@ class PostController extends Controller
     public function update($id, Request $request)
     {
         // $post= Post::findOrFail($id);
+        // dd($request->all());
         $group=[];
         $new_field=[];
+        $request['cf_value1']=(isset($request['cf_value1']) ? $request['cf_value1']  : "");
+        $request['cf_value2']=(isset($request['cf_value2']) ? $request['cf_value2']  : "");
+        $request['cf_value3']=(isset($request['cf_value3']) ? $request['cf_value3']  : "");
+        $request['cf_value4']=(isset($request['cf_value4']) ? $request['cf_value4']  : "");
+        $request['cf_value5']=(isset($request['cf_value5']) ? $request['cf_value5']  : "");
         $get_cf_id=(isset($request['cf_detail_id']) ? $request['cf_detail_id']  : "");
         $get_cf_name=(isset($request['cf_detail_name']) ? $request['cf_detail_name']  : "");
         $get_cf_type=(isset($request['cf_detail_type']) ? $request['cf_detail_type']  : "");
         $get_cf_value=(isset($request['cf_detail_value']) ? $request['cf_detail_value']  : "");
         $get_cf_file=(isset($request['cf_file']) ? $request['cf_file']  : "");
+        $get_cf_image=(isset($request['cf_image']) ? $request['cf_image']  : "");
 
          $validator = Validator::make($request->all(), [
             'title' => 'required',
@@ -304,7 +311,6 @@ class PostController extends Controller
         $group['cfl_group_id']=$cfl_group_id;
         $group['post_id']=$id;
 
-
        if ($request['acf_group']==0) {
             CustomFieldValue::where('post_id',$id)->delete();
        }
@@ -333,12 +339,17 @@ class PostController extends Controller
 
            $new_or_update=CustomFieldValue::where('post_id',$id)->first();
 
-           //  dd($group);
              if (empty($new_or_update)) {
                  CustomFieldValue::insert($group);
                }
            else {
-               CustomFieldValue::where('post_id',$id)->update($group);
+                      foreach ($group as $key => $value) {
+                              if ($value!="") {
+                                 $list[$key]=$value;
+                              }
+                      }
+
+                     CustomFieldValue::where('post_id',$id)->update($list);
            }
       }
 
@@ -351,30 +362,36 @@ class PostController extends Controller
                            $details['cf_type']=$get_cf_type[$i];
 
                            if ($get_cf_type[$i]==4) {
-                                $file = current($get_cf_file);
-                                $photo=PostController::img_name($file);
 
-                                $details['cf_value']=$photo;
+                                          $file = current($get_cf_file);
+                                          $photo=PostController::img_name($file);
 
-                                array_shift($get_cf_file);
-                           }
+                                          $details['cf_value']=$photo;
+
+                                          array_shift($get_cf_file);
+
+                                  }
 
                            else {
                                    $value = current($get_cf_value);
                                    $details['cf_value']=$value;
                                    array_shift($get_cf_value);
                            }
-
+                        // dd($details);
                          if ($get_cf_id[$i] > 0) {
-                              CustomFieldDetail::where('id',$get_cf_id[$i])->update($details);
+
+                           $post = CustomFieldDetail::findOrFail($get_cf_id[$i]);
+
+                           // $post->fill($details)->save();
+
+                              $post= $post->where('id',$get_cf_id[$i])->update($details);
                          }
                        else {
                               $new_field[]=$details;
                         }
 
             }
-            // dd($new_field);
-
+          
             CustomFieldDetail::where('post_id',$id)->whereNotIn('id',$get_cf_id)->delete();
             $insert_id=CustomFieldDetail::insert($new_field);
 

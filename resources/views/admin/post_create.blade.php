@@ -127,7 +127,7 @@
                         @endif
                     </div>
                 </div>
-
+                <hr>
 								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
 										<label class="col-md-2 control-label">Coustom Field Lists </label>
 

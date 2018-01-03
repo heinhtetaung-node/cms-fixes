@@ -59,6 +59,7 @@ $(document).ready(function(){
 
         tr.find('#input4').hide();
         tr.find('#input4').attr('disabled', 'true');
+        tr.find('#input_img').removeAttr('disabled');
 
         tr.find('#input5').hide();
         tr.find('#input5').attr('disabled', 'true');

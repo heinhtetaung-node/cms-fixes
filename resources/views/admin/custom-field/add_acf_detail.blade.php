@@ -13,7 +13,8 @@
        <input type="text" name="cf_detail_value[]" class="form-control cf_detail_value" id="input1" style="display:none" required>
        <input type="number" name="cf_detail_value[]" class="form-control cf_detail_value" id="input2" style="display:none" required>
        <input type="date" name="cf_detail_value[]" class="form-control cf_detail_value" id="input3" style="display:none" required>
-       <input type="file" name="cf_file[]" class="form-control cf_detail_value" id="input4" style="display:none" multiple required>
+       <input type="file" name="cf_file[]" class="form-control cf_detail_value" id="input4" style="display:none" required>
+       <input type='hidden' name='cf_image[]' class='form-control cf_detail_image' id="input_img" value="" disabled>
        <textarea name="cf_detail_value[]" rows="5" cols="50" class="form-control cf_detail_value" id="input5" style="display:none" required></textarea>
      </td>
      <td><span class="btn btn-link pull-right remove" data-id="0">X</span></td>
@@ -34,6 +35,7 @@ $(document).ready(function(){
 
       tr.find('#input4').hide();
       tr.find('#input4').attr('disabled', 'true');
+      tr.find('#input_img').removeAttr('disabled');
 
       tr.find('#input5').hide();
       tr.find('#input5').attr('disabled', 'true');

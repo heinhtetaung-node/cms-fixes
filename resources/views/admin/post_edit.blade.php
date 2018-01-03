@@ -136,7 +136,7 @@
                     </div>
                 </div>
 
-
+                <hr>
 								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
 										<label class="col-md-2 control-label">Coustom Field Lists </label>
 
@@ -288,7 +288,7 @@
                             <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' value='$value' required>
                             <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
                             <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' required>
-                            <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
+                            <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none'>
                             <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' required></textarea>
                         </td>";
                   echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
@@ -309,7 +309,7 @@
                            <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
                            <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' value='$value' style='display:none' required>
                            <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' required>
-                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
+                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none'>
                            <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required></textarea>
                        </td>";
                  echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
@@ -330,7 +330,7 @@
                            <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
                            <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
                            <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' value='$value' style='display:none' required>
-                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
+                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none'>
                            <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required></textarea>
                       </td>";
                  echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
@@ -351,7 +351,7 @@
                            <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
                            <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
                            <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none'  required>
-                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' value='$value' style='display:none' multiple required>
+                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' value='$value' required>
                            <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required></textarea>
                       </td>";
                  echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
@@ -372,7 +372,7 @@
                             <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
                             <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
                             <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none'  required>
-                            <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
+                            <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none'>
                             <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required>$value</textarea>
                         </td>";
                   echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";

@@ -39,7 +39,7 @@
                     echo "<input type='date' class='form-control cf_value' name='$name' value='$value' required>";
                   break;
                  case 4:
-                     echo "<input type='file' class='form-control cf_value' name='$name' value='$value' multiple required>";
+                     echo "<input type='file' class='form-control cf_value' name='$name' value='$value' multiple >";
                   break;
                   case 5:
                       echo "<textarea class='form-control cf_value' rows='8' cols='80' name='$name' required>$value</textarea>";
