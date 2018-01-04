@@ -12,7 +12,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="page-title txt-color-blueDark"><i class="fa fa-list-ul"></i> Post Create</h1>
-			</div>	
+			</div>
 		</div>
 		<div class="row">
 			<form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.post.store') }}">
@@ -55,11 +55,11 @@
                     <div class="col-md-9">
                         <select id="ctr_sub_id" class="form-control" name="sub_category_id">
                             <option value="{{old('sub_category_id')}}"></option>
-                         
+
                            <!--  @foreach($subcat as $sc)
                                 <option value="{{ $sc->id }}">{{ $sc->title }}</option>
                             @endforeach -->
-                            
+
                         </select>
                     </div>
                 </div>
@@ -128,51 +128,54 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Custom Field</label>
+								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
+										<label class="col-md-2 control-label">Coustom Field Lists </label>
 
-                    <div class="col-md-9">
-                        <textarea class="form-control" name="custom_field1">{{ old('custom_field1') }}</textarea>
+										<div class="col-md-9">
+												<select class="form-control acf_group" name="acf_group">
+														<option value="0">None</option>
+																@foreach ($acf as $value)
+																			<option value="{{$value->id}}">{{$value->group_name}}</option>
+																@endforeach
+											 </select>
+												@if ($errors->has('acf_group'))
+														<span class="help-block">
+																<strong>{{ $errors->first('acf_group') }}</strong>
+														</span>
+												@endif
 
-                    </div>
-                </div>
+												<div class="acf_group_value">
 
+					              </div>
+										</div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Custom Field</label>
+								</div>
+                <hr>
 
-                    <div class="col-md-9">
-                        <textarea class="form-control" name="custom_field2">{{ old('custom_field2') }}</textarea>
+								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
+ 									 <label class="col-md-2 control-label">Custom Field Details</label>
 
-                    </div>
-                </div>
+ 									 <div class="col-md-9">
+												 <table class="table myTable" style="display:none;">
+														<thead>
+																<th>Custom Field Name</th>
+																<th>Custom Field Type</th>
+																<th>Custom Field value</th>
+																<th></th>
+														</thead>
+														<tbody>
+														</tbody>
+												</table>
+												<button type="button" class="btn btn-success add_acf_detail">Add Field</button><br>
+ 											 @if ($errors->has('acf_group'))
+ 													 <span class="help-block">
+ 															 <strong>{{ $errors->first('acf_group') }}</strong>
+ 													 </span>
+ 											 @endif
+ 									 </div>
+ 							 </div>
+ 							 <hr>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Custom Field</label>
-
-                    <div class="col-md-9">
-                        <textarea class="form-control" name="custom_field3">{{ old('custom_field3') }}</textarea>
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Custom Field</label>
-
-                    <div class="col-md-9">
-                        <textarea class="form-control" name="custom_field4">{{ old('custom_field4') }}</textarea>
-
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Custom Field</label>
-
-                    <div class="col-md-9">
-                         <input class="form-control" type="date" name="custom_field5" value="{{ old('custom_field5') }}">
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-6">
@@ -184,9 +187,9 @@
                 </div>
             </form>
 		</div>
-		
+
 	</div>
-    <input type="hidden" id="ctr_tocken" value="{{ csrf_token() }}" /> 
+    <input type="hidden" id="ctr_tocken" value="{{ csrf_token() }}" />
 </div>
 
 @endsection
@@ -201,7 +204,7 @@
                height: 300,                 // set editor height
                minHeight: null,             // set minimum height of editor
                maxHeight: null,             // set maximum height of editor
-               focus: true  
+               focus: true
         });
     });
   </script>
