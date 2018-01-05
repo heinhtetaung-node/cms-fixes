@@ -97,21 +97,18 @@
 
                 <div class="form-group{{ $errors->has('short_description') ? ' has-error' : '' }}">
                     <label class="col-md-2 control-label">Short Description</label>
-
                     <div class="col-md-9">
-                        <textarea class="form-control" name="short_description">{{ $posts->short_description }}</textarea>
-
-                        @if ($errors->has('short_description'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('short_description') }}</strong>
-                            </span>
-                        @endif
+	                        <textarea class="form-control" name="short_description">{{ $posts->short_description }}</textarea>
+	                        @if ($errors->has('short_description'))
+	                            <span class="help-block">
+	                                <strong>{{ $errors->first('short_description') }}</strong>
+	                            </span>
+	                        @endif
                     </div>
                 </div>
 
                 <div class="form-group{{ $errors->has('detail_photo') ? ' has-error' : '' }}">
                     <label class="col-md-2 control-label">Detail Photo</label>
-
                     <div class="col-md-9">
                         <img src="{{ asset('upload/posts/'. $posts->detail_photo) }}" style="max-height: 300px">
                         <input type="file" class="form-control" name="detail_photo">@if ($errors->has('detail_photo'))
@@ -124,10 +121,8 @@
 
                 <div class="form-group{{ $errors->has('detail_description') ? ' has-error' : '' }}">
                     <label class="col-md-2 control-label">Detail Description</label>
-
                     <div class="col-md-9">
                         <textarea class="form-control" id="summernote" style="height:300px" name="detail_description">{{ $posts->detail_description}}</textarea>
-
                         @if ($errors->has('detail_description'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('detail_description') }}</strong>
@@ -135,40 +130,44 @@
                         @endif
                     </div>
                 </div>
-
-
+                <hr>
 								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
-										<label class="col-md-2 control-label">Coustom Field Lists </label>
-
-										<div class="col-md-9">
-												<select class='form-control acf_group' name='acf_group'>
-														 <option value='0'>None</option>
-														 {{CustomFieldGroup($cf_lists,$cfl_group_id)}}
-												</select>
-												@if ($errors->has('acf_group'))
-														<span class="help-block">
-																<strong>{{ $errors->first('acf_group') }}</strong>
-														</span>
-												@endif
-
+											<label class="col-md-2 control-label">Coustom Field Lists </label>
+											<div class="col-md-9">
+														<select class='form-control acf_group' name='acf_group'>
+																 <option value='0'>None</option>
+																 {{CustomFieldGroup($cf_lists,$cfl_group_id)}}
+														</select>
+														@if ($errors->has('acf_group'))
+																<span class="help-block">
+																		<strong>{{ $errors->first('acf_group') }}</strong>
+																</span>
+														@endif
+												<br>
 												<div class="acf_group_value">
 
 												</div>
 										</div>
-
 								</div>
 								<hr>
-
 								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
 									 <label class="col-md-2 control-label">Custom Field Details</label>
-
 									 <div class="col-md-9">
 												 <table class="table myTable">
-														<thead>
-																<th>Custom Field Name</th>
-																<th>Custom Field Type</th>
-																<th>Custom Field value</th>
-																<th></th>
+														<thead >
+																<th>
+																		<div class="col-md-3">
+																			Custom Field Name
+																		</div>
+																	 <div class="col-md-3">
+																			Custom Field Type
+																		</div>
+																	 <div class="col-md-5">
+																			Custom Field value
+																		</div>
+																	 <div class="col-md-1">
+																	 </div>
+															 </th>
 														</thead>
 														<tbody>
 																@if ($cf_details!=null)
@@ -179,16 +178,9 @@
 														</tbody>
 												</table>
 												<button type="button" class="btn btn-success add_acf_detail">Add Field</button><br>
-											 @if ($errors->has('acf_group'))
-													 <span class="help-block">
-															 <strong>{{ $errors->first('acf_group') }}</strong>
-													 </span>
-											 @endif
 									 </div>
 							 </div>
 							 <hr>
-
-
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-6">
                         <br>
@@ -199,7 +191,6 @@
                 </div>
             </form>
 		</div>
-
 	</div>
     <input type="hidden" id="ctr_tocken" value="{{ csrf_token() }}" />
 </div>
@@ -214,7 +205,7 @@
     $(document).ready(function() {
 			$('table.myTable > tbody > tr').each(function(){
 				var i=$(this).find('.cf_detail_type').val();
-				// var tr = $('cf_detail_type').closest("tr");
+
 				$(this).find('#input1').hide();
 				$(this).find('#input1').attr('disabled', 'true');
 
@@ -232,6 +223,10 @@
 
 				$(this).find('#input'+i).show();
 				$(this).find('#input'+i).removeAttr('disabled');
+
+				if (i==4) {
+							$(this).find('#img').show();
+				}
 
 			});
 
@@ -274,124 +269,180 @@
     function customField_details($name,$type,$value,$id) {
          switch ($type) {
              case 1:
-                  echo "<tr>";
-                  echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
-                  echo "<td><input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' required></td>";
-                  echo "<td><select class='form-control cf_detail_type' name='cf_detail_type[]' required>
-                            <option value='1' selected>Text</option>
-                            <option value='2'>Number</option>
-                            <option value='3'>Date</option>
-                            <option value='4'>Image/File</option>
-                            <option value='5'>Textarea</option>
-                        </select></td>";
-                  echo "<td>
-                            <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' value='$value' required>
-                            <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
-                            <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' required>
-                            <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
-                            <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' required></textarea>
-                        </td>";
-                  echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
-                  echo "</tr>";
+									 echo "<tr><td>";
+									 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
+									 echo	"<div class='form-group'>
+																 <div class='col-md-3'>
+																		 <input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' >
+																 </div>
+																 <div class='col-md-3'>
+																      <select class='form-control cf_detail_type' name='cf_detail_type[]' >
+																					 <option value='1' selected>Text</option>
+																					 <option value='2'>Number</option>
+																					 <option value='3'>Date</option>
+																					 <option value='4'>Image/File</option>
+																					 <option value='5'>Textarea</option>
+																			 </select>
+																 </div>
+																 <div class='col-md-5'>
+																			 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' value='$value' >
+																			 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
+																			 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
+																			 <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' >
+																			 <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' ></textarea>
+																 </div>
+																 <div  class='col-md-1'>
+																       <span class='btn btn-link pull-right remove' data-id='$id'>X</span>
+																 </div>
+													  </div>
+														</td></tr>";
                   break;
            case 2:
-                 echo "<tr>";
-                 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
-                 echo "<td><input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' required></td>";
-                 echo "<td><select class='form-control cf_detail_type' name='cf_detail_type[]' required>
-                           <option value='1'>Text</option>
-                           <option value='2' selected>Number</option>
-                           <option value='3'>Date</option>
-                           <option value='4'>Image/File</option>
-                           <option value='5'>Textarea</option>
-                       </select></td>";
-                 echo "<td>
-                           <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
-                           <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' value='$value' style='display:none' required>
-                           <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' required>
-                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
-                           <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required></textarea>
-                       </td>";
-                 echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
-                 echo "</tr>";
-                 break;
+								 echo "<tr><td>";
+								 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
+								 echo	"<div class='form-group'>
+															 <div class='col-md-3'>
+																	 <input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' >
+															 </div>
+															 <div class='col-md-3'>
+																		<select class='form-control cf_detail_type' name='cf_detail_type[]' >
+																				 <option value='1'>Text</option>
+																				 <option value='2' selected>Number</option>
+																				 <option value='3'>Date</option>
+																				 <option value='4'>Image/File</option>
+																				 <option value='5'>Textarea</option>
+																		 </select>
+															 </div>
+															 <div class='col-md-5'>
+																		 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
+																		 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' value='$value' style='display:none' >
+																		 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
+																		 <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' >
+																		 <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' ></textarea>
+															 </div>
+															 <div  class='col-md-1'>
+																		 <span class='btn btn-link pull-right remove' data-id='$id'>X</span>
+															 </div>
+													</div>
+													</td></tr>";
+			                 break;
            case 3:
-                 echo "<tr>";
-                 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
-                 echo "<td><input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' required></td>";
-                 echo "<td><select class='form-control cf_detail_type' name='cf_detail_type[]' required>
-                           <option value='1'>Text</option>
-                           <option value='2'>Number</option>
-                           <option value='3' selected>Date</option>
-                           <option value='4'>Image/File</option>
-                           <option value='5'>Textarea</option>
-                       </select></td>";
-                 echo "<td>
-                           <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
-                           <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
-                           <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' value='$value' style='display:none' required>
-                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
-                           <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required></textarea>
-                      </td>";
-                 echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
-                 echo "</tr>";
-                 break;
+								 echo "<tr><td>";
+								 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
+								 echo	"<div class='form-group'>
+															 <div class='col-md-3'>
+																	 <input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' >
+															 </div>
+															 <div class='col-md-3'>
+																		<select class='form-control cf_detail_type' name='cf_detail_type[]' >
+																				 <option value='1'>Text</option>
+																				 <option value='2'>Number</option>
+																				 <option value='3' selected>Date</option>
+																				 <option value='4'>Image/File</option>
+																				 <option value='5'>Textarea</option>
+																		 </select>
+															 </div>
+															 <div class='col-md-5'>
+																		 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
+																		 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
+																		 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' value='$value' style='display:none' >
+																		 <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' >
+																		 <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' ></textarea>
+															 </div>
+															 <div  class='col-md-1'>
+																		 <span class='btn btn-link pull-right remove' data-id='$id'>X</span>
+															 </div>
+													</div>
+													</td></tr>";
+			                 break;
            case 4:
-                 echo "<tr>";
-                 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
-                 echo "<td><input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' required></td>";
-                 echo "<td><select class='form-control cf_detail_type' name='cf_detail_type[]' required>
-                           <option value='1'>Text</option>
-                           <option value='2'>Number</option>
-                           <option value='3'>Date</option>
-                           <option value='4' selected>Image/File</option>
-                           <option value='5'>Textarea</option>
-                       </select></td>";
-                 echo "<td>
-                           <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
-                           <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
-                           <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none'  required>
-                           <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' value='$value' style='display:none' multiple required>
-                           <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required></textarea>
-                      </td>";
-                 echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
-                 echo "</tr>";
-                 break;
+								 $img=asset("upload/custom_field/$value");
+								 echo "<tr><td>";
+								 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
+								 echo	"<div class='form-group'>
+															 <div class='col-md-3'>
+																	 <input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' >
+															 </div>
+															 <div class='col-md-3'>
+																		<select class='form-control cf_detail_type' name='cf_detail_type[]' >
+																				 <option value='1'>Text</option>
+																				 <option value='2'>Number</option>
+																				 <option value='3'>Date</option>
+																				 <option value='4' selected>Image/File</option>
+																				 <option value='5'>Textarea</option>
+																		 </select>
+															 </div>
+															 <div class='col-md-5'>
+															       <img src='$img' id='img' style='max-height: 70px' style='display:none'>
+																		 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
+																		 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
+																		 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
+																		 <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' value='$value' style='display:none' >
+																		 <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' ></textarea>
+															 </div>
+															 <div  class='col-md-1'>
+																		 <span class='btn btn-link pull-right remove' data-id='$id'>X</span>
+															 </div>
+													</div>
+													</td></tr>";
+			                 break;
             case 5:
-                  echo "<tr>";
-                  echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
-                  echo "<td><input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' required></td>";
-                  echo "<td><select class='form-control cf_detail_type' name='cf_detail_type[]' required>
-                            <option value='1'>Text</option>
-                            <option value='2'>Number</option>
-                            <option value='3'>Date</option>
-                            <option value='4'>Image/File</option>
-                            <option value='5' selected>Textarea</option>
-                        </select></td>";
-                  echo "<td>
-                            <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' required>
-                            <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' required>
-                            <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none'  required>
-                            <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' multiple required>
-                            <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none' required>$value</textarea>
-                        </td>";
-                  echo "<td><span class='btn btn-link pull-right remove' data-id='$id'>X</span></td>";
-                  echo "</tr>";
+									echo "<tr><td>";
+									echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
+									echo	"<div class='form-group'>
+																<div class='col-md-3'>
+																		<input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' >
+																</div>
+																<div class='col-md-3'>
+																		 <select class='form-control cf_detail_type' name='cf_detail_type[]' >
+																					<option value='1'>Text</option>
+																					<option value='2'>Number</option>
+																					<option value='3'>Date</option>
+																					<option value='4'>Image/File</option>
+																					<option value='5' selected>Textarea</option>
+																			</select>
+																</div>
+																<div class='col-md-5'>
+																			<input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
+																			<input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
+																			<input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
+																			<input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' >
+																			<textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' value='$value'  style='display:none ' ></textarea>
+																</div>
+																<div  class='col-md-1'>
+																			<span class='btn btn-link pull-right remove' data-id='$id'>X</span>
+																</div>
+													 </div>
+													 </td></tr>";
                   break;
            default:
-                 echo "<tr>";
-                 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='0'>";
-                 echo "<td><input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value=''></td>";
-                 echo "<select class='form-control cf_detail_type' name='cf_detail_type[]'>
-                           <option value='1'>Text</option>
-                           <option value='2'>Number</option>
-                           <option value='3'>Date</option>
-                           <option value='4'>Image/File</option>
-                           <option value='5'>Textarea</option>
-                       </select>";
-                 echo "<td><input type='text' class='form-control cf_detail_value' name='cf_detail_value[]' value='$value'></td>";
-                 echo "<td><span class='btn btn-link pull-right remove'>X</span></td>";
-                 echo "</tr>";
+									 echo "<tr><td>";
+									 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
+									 echo	"<div class='form-group'>
+																 <div class='col-md-3'>
+																		 <input type='text' class='form-control cf_detail_name' name='cf_detail_name[]' value='$name' >
+																 </div>
+																 <div class='col-md-3'>
+																			<select class='form-control cf_detail_type' name='cf_detail_type[]' >
+																					 <option value='1' selected>Text</option>
+																					 <option value='2'>Number</option>
+																					 <option value='3'>Date</option>
+																					 <option value='4'>Image/File</option>
+																					 <option value='5'>Textarea</option>
+																			 </select>
+																 </div>
+																 <div class='col-md-5'>
+																			 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' value='$value' >
+																			 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
+																			 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
+																			 <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' style='display:none' >
+																			 <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' ></textarea>
+																 </div>
+																 <div  class='col-md-1'>
+																			 <span class='btn btn-link pull-right remove' data-id='$id'>X</span>
+																 </div>
+														</div>
+														</td></tr>";
 
          }
      }

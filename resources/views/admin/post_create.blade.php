@@ -127,41 +127,46 @@
                         @endif
                     </div>
                 </div>
-
+                <hr>
 								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
 										<label class="col-md-2 control-label">Coustom Field Lists </label>
-
 										<div class="col-md-9">
 												<select class="form-control acf_group" name="acf_group">
-														<option value="0">None</option>
+														   <option value="0">None</option>
 																@foreach ($acf as $value)
-																			<option value="{{$value->id}}">{{$value->group_name}}</option>
+																		<option value="{{$value->id}}">{{$value->group_name}}</option>
 																@endforeach
-											 </select>
+											  </select>
 												@if ($errors->has('acf_group'))
 														<span class="help-block">
 																<strong>{{ $errors->first('acf_group') }}</strong>
 														</span>
 												@endif
-
+                        <br>
 												<div class="acf_group_value">
 
-					              </div>
+											 </div>
 										</div>
-
 								</div>
                 <hr>
-
 								<div class="form-group{{ $errors->has('acf_group') ? ' has-error' : '' }}">
  									 <label class="col-md-2 control-label">Custom Field Details</label>
-
  									 <div class="col-md-9">
 												 <table class="table myTable" style="display:none;">
 														<thead>
-																<th>Custom Field Name</th>
-																<th>Custom Field Type</th>
-																<th>Custom Field value</th>
-																<th></th>
+															  <th>
+                                    <div class="col-md-3">
+                                    	 Custom Field Name
+                                    </div>
+																		<div class="col-md-3">
+                                    	 Custom Field Typ
+                                    </div>
+																		<div class="col-md-5">
+                                    	 Custom Field valu
+                                    </div>
+																		<div class="col-md-1">
+																		</div>
+																</th>
 														</thead>
 														<tbody>
 														</tbody>
@@ -175,8 +180,6 @@
  									 </div>
  							 </div>
  							 <hr>
-
-
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-6">
                         <br>

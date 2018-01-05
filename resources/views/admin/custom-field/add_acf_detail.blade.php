@@ -1,22 +1,46 @@
 <tr>
+  <td>
     <input type="hidden" name="cf_detail_id[]" class="cf_detail_id" value="0">
-     <td><input type="text" name="cf_detail_name[]" class="form-control cf_detail_name" required></td>
-     <td> <select class="form-control cf_detail_type" name="cf_detail_type[]" required>
-                  <option value="1">Text</option>
-                  <option value="2">Number</option>
-                  <option value="3">Date</option>
-                  <option value="4">Image/File</option>
-                  <option value="5">Textarea</option>
-             </select>
-      </td>
-     <td>
-       <input type="text" name="cf_detail_value[]" class="form-control cf_detail_value" id="input1" style="display:none" required>
-       <input type="number" name="cf_detail_value[]" class="form-control cf_detail_value" id="input2" style="display:none" required>
-       <input type="date" name="cf_detail_value[]" class="form-control cf_detail_value" id="input3" style="display:none" required>
-       <input type="file" name="cf_file[]" class="form-control cf_detail_value" id="input4" style="display:none" multiple required>
-       <textarea name="cf_detail_value[]" rows="5" cols="50" class="form-control cf_detail_value" id="input5" style="display:none" required></textarea>
-     </td>
-     <td><span class="btn btn-link pull-right remove" data-id="0">X</span></td>
+    <div class="form-group{{ $errors->has('detail_photo') ? ' has-error' : '' }}">
+          <div class="col-md-3">
+              <input type="text" name="cf_detail_name[]" class="form-control cf_detail_name" required>
+              @if ($errors->has('cf_detail_name'))
+                  <span class="help-block">
+                      <strong>{{ $errors->old('cf_detail_name') }}</strong>
+                  </span>
+              @endif
+          </div>
+          <div class="col-md-3">
+                   <select class="form-control cf_detail_type" name="cf_detail_type[]" required>
+                         <option value="1">Text</option>
+                         <option value="2">Number</option>
+                         <option value="3">Date</option>
+                         <option value="4">Image/File</option>
+                         <option value="5">Textarea</option>
+                    </select>
+                    @if ($errors->has('cf_detail_type'))
+                        <span class="help-block">
+                            <strong>{{ $errors->old('cf_detail_type') }}</strong>
+                        </span>
+                    @endif
+          </div>
+          <div class="col-md-5">
+                  <input type="text" name="cf_detail_value[]" class="form-control cf_detail_value" id="input1" style="display:none" required>
+                  <input type="number" name="cf_detail_value[]" class="form-control cf_detail_value" id="input2" style="display:none" required>
+                  <input type="date" name="cf_detail_value[]" class="form-control cf_detail_value" id="input3" style="display:none" required>
+                  <input type="file" name="cf_file[]" class="form-control cf_detail_value" id="input4" style="display:none" multiple required>
+                  <textarea name="cf_detail_value[]" rows="5" cols="50" class="form-control cf_detail_value" id="input5" style="display:none" required></textarea>
+                    @if ($errors->has('cf_detail_value'))
+                        <span class="help-block">
+                            <strong>{{ $errors->old('cf_detail_value') }}</strong>
+                        </span>
+                    @endif
+          </div>
+          <div class="col-md-1">
+               <span class="btn btn-link pull-right remove" data-id="0">X</span>
+          </div>
+    </div>
+  </td>
 </tr>
 
 <script>

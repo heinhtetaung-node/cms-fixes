@@ -48,24 +48,31 @@ $(document).ready(function(){
         var val = $(this).val();
         var tr = $(this).closest("tr");
 
+        tr.find('#img').hide();
         tr.find('#input1').hide();
         tr.find('#input1').attr('disabled', 'true');
 
+        tr.find('#img').hide();
         tr.find('#input2').hide();
         tr.find('#input2').attr('disabled', 'true');
 
+        tr.find('#img').hide();
         tr.find('#input3').hide();
         tr.find('#input3').attr('disabled', 'true');
 
+        tr.find('#img').hide();
         tr.find('#input4').hide();
         tr.find('#input4').attr('disabled', 'true');
-        tr.find('#input_img').removeAttr('disabled');
 
+        tr.find('#img').hide();
         tr.find('#input5').hide();
         tr.find('#input5').attr('disabled', 'true');
 
         tr.find('#input'+val).show();
         tr.find('#input'+val).removeAttr('disabled');
+        if (i==4) {
+              tr.find('#img').show();
+				}
 
    });
 
@@ -111,6 +118,7 @@ $(document).ready(function(){
                    }
                    else {
                      alert(response.message);
+                     location.reload();
                    }
               },
               error: function (jqXHR, textStatus, errorThrown)

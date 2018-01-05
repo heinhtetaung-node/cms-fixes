@@ -49,6 +49,11 @@ class PostController extends Controller
     public function store(Request $request){
         //dd($request->all());
         // 'title', 'main_category_id', 'sub_category_id', 'short_description', 'feature_photo', 'detail_description', 'detail_photo', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'custom_field5'
+        $request['cf_value1']=(isset($request['cf_value1']) ? $request['cf_value1']  : "");
+        $request['cf_value2']=(isset($request['cf_value2']) ? $request['cf_value2']  : "");
+        $request['cf_value3']=(isset($request['cf_value3']) ? $request['cf_value3']  : "");
+        $request['cf_value4']=(isset($request['cf_value4']) ? $request['cf_value4']  : "");
+        $request['cf_value5']=(isset($request['cf_value5']) ? $request['cf_value5']  : "");
         $get_cf_name=(isset($request['cf_detail_name']) ? $request['cf_detail_name']  : "");
         $get_cf_type=(isset($request['cf_detail_type']) ? $request['cf_detail_type']  : "");
         $get_cf_value=(isset($request['cf_detail_value']) ? $request['cf_detail_value']  : "");
@@ -59,7 +64,6 @@ class PostController extends Controller
             'short_description' => 'required',
             'feature_photo' => 'required',
             'detail_description' => 'required',
-            // 'detail_photo' => 'required',
             'attach_file'=>'max:50000',
         ]);
         if ($validator->fails()) {
@@ -156,7 +160,7 @@ class PostController extends Controller
     function img_name($file)
     {
          $fileName = $file->getClientOriginalName();
-         $destinationPath = "images/";
+         $destinationPath = "upload/custom_field/";
           if($fileName) {
                $file->move($destinationPath, $fileName);
            }
@@ -271,6 +275,7 @@ class PostController extends Controller
                    ? PostController::img_name($request->cf_value5)
                    : $request['cf_value5'];
            $new_or_update=CustomFieldValue::where('post_id',$id)->first();
+
              if (empty($new_or_update)) {
                  CustomFieldValue::insert($group);
                }
@@ -283,6 +288,7 @@ class PostController extends Controller
                      CustomFieldValue::where('post_id',$id)->update($list);
            }
       }
+
       if ($get_cf_type!="")
       {
             for ($i=0; $i < count($get_cf_type) ; $i++) {
@@ -299,16 +305,15 @@ class PostController extends Controller
                                    $value = current($get_cf_value);
                                    $details['cf_value']=$value;
                                    array_shift($get_cf_value);
-                           }
+                              }
                         // dd($details);
                          if ($get_cf_id[$i] > 0) {
-                           $post = CustomFieldDetail::findOrFail($get_cf_id[$i]);
-                           // $post->fill($details)->save();
+                              $post = CustomFieldDetail::findOrFail($get_cf_id[$i]);
                               $post= $post->where('id',$get_cf_id[$i])->update($details);
-                         }
+                            }
                        else {
                               $new_field[]=$details;
-                        }
+                            }
             }
 
             CustomFieldDetail::where('post_id',$id)->whereNotIn('id',$get_cf_id)->delete();
