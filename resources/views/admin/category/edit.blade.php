@@ -67,13 +67,17 @@
 	var sub_changed;
 	$(document).ready(function(){
 		var size=$('.length').val();
-		if(size>1)
+		if(size==1)
 		{
-			$sub_val=$('.sub_category').val();
+			$sub_val=$('.parent_category').val();
+		}
+		else if(size==0)
+		{
+			$sub_val=0;
 		}
 		else
 		{
-			$sub_val=0;
+			$sub_val=$('.sub_category').val();
 		}
 	});
 		$(".parent_category").change(function(){
@@ -112,6 +116,14 @@
 						_token : $('#ctr_token').val()
 					},
 					dataType: "json",
+					success:function(data){
+                        alert(data.message);
+                        window.location="http://localhost/cms-fixes/public/admin/category";
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                       alert("Someting wrong");
+                    }             
 
 			});
 		});

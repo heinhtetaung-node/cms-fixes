@@ -47,7 +47,7 @@ class PostController extends Controller
         return view('admin.post_create', array('cat' => $cat, 'subcat'=>$subcat,'acf'=>$acf));
     }
     public function store(Request $request){
-        //dd($request->all());
+       
         // 'title', 'main_category_id', 'sub_category_id', 'short_description', 'feature_photo', 'detail_description', 'detail_photo', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'custom_field5'
         $get_cf_name=(isset($request['cf_detail_name']) ? $request['cf_detail_name']  : "");
         $get_cf_type=(isset($request['cf_detail_type']) ? $request['cf_detail_type']  : "");
@@ -55,7 +55,7 @@ class PostController extends Controller
         $get_cf_file=(isset($request['cf_file']) ? $request['cf_file']  : "");
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'main_category_id' => 'required',
+            'category_id' => 'required',
             'short_description' => 'required',
             'feature_photo' => 'required',
             'detail_description' => 'required',
@@ -66,7 +66,8 @@ class PostController extends Controller
             return redirect()->back()
               ->withInput()
               ->withErrors($validator);
-        }
+        }        
+          //dd($request->all());
         $structure= "upload/posts/";
         $feature_photo="";
         if($request->file('feature_photo')!=NULL){

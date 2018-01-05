@@ -147,7 +147,7 @@ class CategoryController extends Controller
         );
 
         Category::where('id','=', $request->id)->update($data);
-         return redirect()->back()->with('success','Category is successfully Uploaded!');
+       return json_encode(["status"=>0,"message"=>"Has been updated!!"]); 
   }
 
     public function delete($id)

@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}" id="sub_category_div">
                     <label class="col-md-2 control-label">Sub Category</label>
 
                     <div class="col-md-9 sub_cat">
@@ -210,6 +210,7 @@
                maxHeight: null,             // set maximum height of editor
                focus: true
         });
+        $('#sub_category_div').hide();
     });
     $sub_val=0;
     $('.add_category').delegate('.parent_category', 'change', function(){
@@ -222,7 +223,8 @@
             success: function(data){ 
                 if(data.length >209)
                 {
-                    $('.sub_cat').html(data);   
+                    $('.sub_cat').html(data);
+                    $('#sub_category_div').show();   
                     $('.sub_cat').show();                
                 }
                 else
