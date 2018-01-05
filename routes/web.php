@@ -27,6 +27,10 @@ Route::group(['prefix' => 'admin'], function(){
 
 		Route::get('/category/sub_cat/{id}',['as' => 'admin.category.subcat', 'uses' =>'CategoryController@sub_cat']);
 
+		Route::get('post/sub_cat/{id}',['as' => 'admin.post.subcat', 'uses' =>'CategoryController@sub_cat']);
+
+		Route::get('/sub_cat/{id}',['as' => 'admin.post.subcat', 'uses' =>'CategoryController@sub_cat']);
+
 		Route::post('/category/create', ['as' => 'admin.category.store', 'uses' => 'CategoryController@save']);
 
 		Route::get('/category/edit/{id}', ['as' => 'admin.category.edit', 'uses' => 'CategoryController@edit']);

@@ -94,7 +94,7 @@ class PostController extends Controller
         }
         $arr=[
                 'title' => $request->title,
-                'main_category_id' => $request->main_category_id,
+                'main_category_id' => $request->category_id,
                 'sub_category_id' => ($request->sub_category_id)?$request->sub_category_id : '0',
                 'short_description' => ($request->short_description)? $request->short_description : '',
                 'feature_photo' => $feature_photo,

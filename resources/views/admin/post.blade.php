@@ -24,10 +24,9 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 				<h1 class="page-title txt-color-blueDark"><i class="fa fa-list-ul"></i> Post List</h1>
 			</div>
 		</div>
-
-
 		<div class="row">
-			<form action="{{ route('admin.post.search') }}" method="GET" role="form">
+			<form action="{{ route('admin.post.search') }}" method="GET" role="form" 
+			   class="add_category">
 				<div class="form-group col-md-3">
 				    <div class="input-group">
 				        <input type="text" class="form-control" name="search"
@@ -36,30 +35,16 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 				    </div>
 				</div>
 				<div class="form-group col-md-3">
-			    	<!-- <select id="ctr_parent_id" class="form-control" >
-                        <option value="">Select Category</option>
-                        @foreach($cat as $key=>$value)
-                            <option {{ ($category_id==$key) ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
-                        @endforeach
-           </select> -->
-           <select class="form-control parent_category" name="category_id" >
-           			  <option>Please select parent category</option>
-           			{!! CategoriesFunctions::parent_categories(); !!}
-       		 </select>
-        </div>
-                <div class="form-group col-md-3 sub_cat" style="margin-top:-1px;">
-                	<!-- <select id="ctr_sub_id" class="form-control" name="sub_category_id">
-                        <option value="">Select Sub Category</option>
-                        @foreach($subcat as $sc)
-                            <option {{ (isset($sub_category_id))? ($sub_category_id==$sc->id)? 'selected' : '' : '' }} value="{{ $sc->id }}">{{ $sc->title }}</option>
-                        @endforeach
-                    </select> -->
-                </div>
-                <div class="form-group col-md-3">
-                	<input type="submit" value="Search" name="Search" class="btn btn-success">
-                </div>
+	           		<select class="form-control parent_category" name="category_id" >
+	           			  <option>Please select parent category</option>
+	           				{!! CategoriesFunctions::parent_categories(); !!}
+	       		 	</select>
+        		</div>
+	            <div class="form-group col-md-3 sub_cat" style="margin-top:-1px;"></div>
+	            <div class="form-group col-md-3">
+	               <input type="submit" value="Search" name="Search" class="btn btn-success">
+	            </div>
 			</form>
-
 			<div class="col-md-6">
 
 			</div>
@@ -109,29 +94,31 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
 
 @section('scripts')
 @parent
-<!-- <script type="text/javascript" src="{{ asset('js/getsubfrommain.js') }}"></script> -->
 <script type="text/javascript">
-$(document).ready(function(){
-  $sub_val=0;
-});
-
-$(".parent_category").change(function(){
-    $sub_val=$(this).val();
-    $val=$(this).val();
-    jQuery.ajax({
-      url : "sub_cat/"+$val,
-      type : "GET",
-      dataType : "html",
-      success: function(data){
-        $('.sub_cat').html(data);
-        $(".sub_categories").change(function(){
-          $sub_val=$(this).val();
-          // var sub_cat_style = $('.sub_categories').css( 'width','195px', 'important');
-
+	$sub_val=0;
+    $('.add_category').delegate('.parent_category', 'change', function(){
+        $sub_val=$(this).val();     
+        $val=$(this).val(); 
+        jQuery.ajax({
+            url : "sub_cat/"+$val,
+            type : "GET",
+            dataType : "html",
+            success: function(data){ 
+                if(data.length >209)
+                {
+                    $('.sub_cat').html(data);   
+                    $('.sub_cat').show();                
+                }
+                else
+                {
+                    $('.sub_cat').hide();
+                }
+            }      
         });
-      }
     });
-});
+    $('.add_category').delegate('.sub_categories', 'change', function() {   
+            $sub_val=$(this).val();
+    }); 
 </script>
 
 @endsection
