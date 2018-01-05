@@ -3,72 +3,57 @@
 @section('styles')
 @parent
 <!-- your custom css here -->
-<style type="text/css">
-.alert-success{
-  display: block;
-  background: #efefef;
-  color: green;
-}
-</style>
 @endsection
 
 @section('content')
 
 <div id="content" class="bodylayout"><!-- second common-->
 	<div class="well">
-<div class="row">
+		<div class="row">
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 				<h1 class="page-title txt-color-blueDark"><i class="fa fa-list-ul"></i> Category Create</h1>
 			</div>
 		</div>
 		<div class="row">
-			 <!-- for success message -->
-            @if ($message = Session::get('success'))
-              <div class="alert alert-success">
-                  <p>{{ $message }}</p>
-              </div>
-             @endif
-
-         <div class="form-group" style="margin-top: 30px;">
-		<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
-		<label>Category</label>
-		<input type="text" class="form-control name" style="width: 200px;" value="{{$name}}">
-		<input type="hidden"  class="id" value="{{$self_id}}">
-		<br>
-		<?php
-		//dd($output);
-		$length=sizeof($output);
-		if($length!=0)
-		{
-		$id=$output[$length-1];
-		$sub_id=$output[0];
-		$s_id=$self_id;
-		}
-		?>
-		<input type="hidden"  class="length" value="{{sizeof($output)}}">
-		 <div><select class="form-control parent_category" style="width:400px;">
-	   @if($length>0)
-			{!! CategoriesFunctions::edit_parent_categories($id); !!}
-		@endif
-		</select>
+			<div class="form-group" style="margin-top: 30px;">
+				<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
+				<label>Category</label>
+				<input type="text" class="form-control name" style="width: 200px;" value="{{$name}}">
+				<input type="hidden"  class="id" value="{{$self_id}}">
+				<br>
+					<?php
+						//dd($output);
+						$length=sizeof($output);
+						if($length!=0)
+						{
+							$id=$output[$length-1];
+							$sub_id=$output[0];
+							$s_id=$self_id;
+						}
+					?>
+				<input type="hidden"  class="length" value="{{sizeof($output)}}">
+				<div>
+					<!-- to show parents -->
+				 	<select class="form-control parent_category" style="width:400px;">
+					   @if($length>0)
+							{!! CategoriesFunctions::edit_parent_categories($id); !!}
+						@endif
+					</select>
+				</div>
+					<br><br>
+					<!-- to show sub-categories -->
+					@if($length>1)
+					<select class="form-control sub_category" style="width:400px;">
+						{!! CategoriesFunctions::editt_sub_category($s_id,$id,$sub_id); !!}
+					</select>
+					@endif
+				<div class="sub_cat">
+					<!-- to show sub of sub-categories -->
+				</div>
+					<br>
+				<input type="button" class="btn btn-success product_update" value="Update">
+			</div>
 		</div>
-		<br><br>
-		@if($length>1)
-		<select class="form-control sub_category" style="width:400px;">
-			{!! CategoriesFunctions::editt_sub_category($s_id,$id,$sub_id); !!}
-		</select>
-		@endif
-		<div class="sub_cat">
-
-		</div>
-		<br>
-
-		<input type="button" class="btn btn-success product_update" value="Update">
-</div>
-
-		</div>
-
-
 	</div>
 </div>
 
