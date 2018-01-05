@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group" style="margin-top: 30px;">
+			<div class="form-group add_category" style="margin-top: 30px;">
 				<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
 				<label>Category</label>
 				<input type="text" class="form-control name" style="width: 200px;" value="{{$name}}">
@@ -80,7 +80,7 @@
 			$sub_val=$('.sub_category').val();
 		}
 	});
-		$(".parent_category").change(function(){
+		$('.add_category').delegate('.parent_category', 'change', function(){
 				changed=1;
 				$val=$(this).val();
 				$('.sub_category').hide();
@@ -89,13 +89,21 @@
 					type : "GET",
 					dataType : "html",
 					success: function(data){
-						$('.sub_cat').html(data);
-						$(".sub_categories").change(function(){
-							 sub_changed=1;
-							$sub_val=$(this).val();
-						});
+						if(data.length >209)
+	                    {
+	                        $('.sub_cat').html(data);   
+	                        $('.sub_cat').show();                
+	                    }
+	                    else
+	                    {
+	                        $('.sub_cat').hide();
+	                    }						
 					}
 				});
+		});
+		$('.add_category').delegate('.sub_category', 'change', function() {
+			sub_changed=1;
+			$sub_val=$(this).val();
 		});
 
 		jQuery(".product_update").click(function(){
