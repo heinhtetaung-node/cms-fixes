@@ -76,7 +76,7 @@ class CategoryController extends Controller
                     'parent_id'=>$request->parent_cat ,
                    );
     Category::insert($data);
-    return redirect()->route('admin.category');
+   return json_encode(["status"=>0,"message"=>"Has been created!!"]);
   }
 
 

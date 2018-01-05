@@ -28,7 +28,7 @@ class CategoriesFunctions1
 				{
 					echo "-- ";	
 				}
-				echo $j.$s->title."</option>";
+				echo $s->title."</option>";
 	         	self::SubCategories($s->id);          	        
 	     	}
 	     	$j=$j-1;  
@@ -105,7 +105,7 @@ class CategoriesFunctions1
 					{
 						echo "-- ";	
 					}
-					echo $j.$s->title."</option>";
+					echo $s->title."</option>";
 		         	self::edit_SubCategories($s->id,$sel_id,$self_id);  	        
 	     	}
 	     	 $j=$j-1;  
@@ -136,9 +136,9 @@ class CategoriesFunctions1
 		{
 		  for($i=0;$i<$j;$i++)
 			{
-				echo "----";	
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";	
 			}
-			echo $j.$s->title.'&nbsp;&nbsp;[<a href="http://localhost/cms-fixes/public/admin/category/edit/'.$s->id.'">edit</a>]  [<a href="http://localhost/cms-fixes/public/admin/category/delete/'.$s->id.'">Delete</a>]';
+			echo '--'.$s->title.'&nbsp;&nbsp;[<a href="http://localhost/cms-fixes/public/admin/category/edit/'.$s->id.'">edit</a>]  [<a href="http://localhost/cms-fixes/public/admin/category/delete/'.$s->id.'">Delete</a>]';
 			echo "<br><br>";
          	self::editSubCategories($s->id);          	        
      	}
