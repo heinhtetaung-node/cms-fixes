@@ -46,8 +46,8 @@ class PostController extends Controller
         $subcat = Category::where('parent_id','!=', '0')->orderBy('parent_id', 'asc')->get();
         return view('admin.post_create', array('cat' => $cat, 'subcat'=>$subcat,'acf'=>$acf));
     }
-    public function store(Request $request){
-        //dd($request->all());
+    public function store(Request $request)
+    {
         // 'title', 'main_category_id', 'sub_category_id', 'short_description', 'feature_photo', 'detail_description', 'detail_photo', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'custom_field5'
         $request['cf_value1']=(isset($request['cf_value1']) ? $request['cf_value1']  : "");
         $request['cf_value2']=(isset($request['cf_value2']) ? $request['cf_value2']  : "");
@@ -58,6 +58,7 @@ class PostController extends Controller
         $get_cf_type=(isset($request['cf_detail_type']) ? $request['cf_detail_type']  : "");
         $get_cf_value=(isset($request['cf_detail_value']) ? $request['cf_detail_value']  : "");
         $get_cf_file=(isset($request['cf_file']) ? $request['cf_file']  : "");
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'main_category_id' => 'required',
@@ -66,36 +67,42 @@ class PostController extends Controller
             'detail_description' => 'required',
             'attach_file'=>'max:50000',
         ]);
+
         if ($validator->fails()) {
             return redirect()->back()
               ->withInput()
               ->withErrors($validator);
         }
+
         $structure= "upload/posts/";
         $feature_photo="";
+
         if($request->file('feature_photo')!=NULL){
-          $file = $request->file('feature_photo');
-          if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
-            $feature_photo = $file->getClientOriginalName();
-            $file->move($structure, $feature_photo);
-          }
+            $file = $request->file('feature_photo');
+            if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
+              $feature_photo = $file->getClientOriginalName();
+              $file->move($structure, $feature_photo);
+            }
         }
+
         $attach_file="";
         if($request->file('attach_file')!=NULL){
-          $file = $request->file('attach_file');
-          if($file->getClientOriginalExtension()=="pdf" || $file->getClientOriginalExtension()=="mp4"){
-            $attach_file = $file->getClientOriginalName();
-            $file->move($structure, $attach_file);
-          }
+            $file = $request->file('attach_file');
+            if($file->getClientOriginalExtension()=="pdf" || $file->getClientOriginalExtension()=="mp4"){
+                $attach_file = $file->getClientOriginalName();
+                $file->move($structure, $attach_file);
+            }
         }
+
         $detail_photo="";
         if($request->file('detail_photo')!=NULL){
-          $file = $request->file('detail_photo');
-          if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
-            $detail_photo = $file->getClientOriginalName();
-            $file->move($structure, $detail_photo);
-          }
+              $file = $request->file('detail_photo');
+              if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
+                $detail_photo = $file->getClientOriginalName();
+                $file->move($structure, $detail_photo);
+              }
         }
+
         $arr=[
                 'title' => $request->title,
                 'main_category_id' => $request->main_category_id,
@@ -106,9 +113,12 @@ class PostController extends Controller
                 'detail_description' => ($request->detail_description)? $request->detail_description : '',
                 'detail_photo' => $detail_photo,
             ];
+
         $post_id=Post::insertGetId($arr);
+
         $group['cfl_group_id']=$request['acf_group'];
         $group['post_id']=$post_id;
+
         // get acf_list_value
         if ($request['acf_group']!=0)
         {
@@ -127,36 +137,39 @@ class PostController extends Controller
              $group['cf_value5']=($request->hasFile('cf_value5'))
                     ? PostController::img_name($request->cf_value5)
                     : $request['cf_value5'];
-             //dd($group);
+
              CustomFieldValue::insert($group);
-      }
-      if ($get_cf_type!="")
-      {
+        }
+
+        if ($get_cf_type!="")
+        {
             for ($i=0; $i <count($get_cf_type) ; $i++) {
-                   $details['post_id']=$post_id;
-                   $details['cf_name']=$get_cf_name[$i];
-                   $details['cf_type']=$get_cf_type[$i];
-                   if ($get_cf_type[$i]==4) {
-                        $file = current($get_cf_file);
-                        $photo=PostController::img_name($file);
-                        $details['cf_value']=$photo;
-                        array_shift($get_cf_file);
-                   }
-                   else {
-                           $value = current($get_cf_value);
-                           $details['cf_value']=$value;
-                           array_shift($get_cf_value);
-                   }
-                   $post_details[]=$details;
-            }
+                     $details['post_id']=$post_id;
+                     $details['cf_name']=$get_cf_name[$i];
+                     $details['cf_type']=$get_cf_type[$i];
+                     if ($get_cf_type[$i]==4) {
+                          $file = current($get_cf_file);
+                          $photo=PostController::img_name($file);
+                          $details['cf_value']=$photo;
+                          array_shift($get_cf_file);
+                     }
+                     else {
+                             $value = current($get_cf_value);
+                             $details['cf_value']=$value;
+                             array_shift($get_cf_value);
+                     }
+                     $post_details[]=$details;
+             }
+
             CustomFieldDetail::insert($post_details);
         }
-        //return redirect()->route('admin.post');
+
         echo "<script>
                     alert('Has been created!!');
                     window.location.href='http://localhost/cms-fixes/public/admin/post';
               </script>";
     }
+
     function img_name($file)
     {
          $fileName = $file->getClientOriginalName();
@@ -166,7 +179,8 @@ class PostController extends Controller
            }
           return $fileName;
     }
-    //update post by ASO
+
+  //update post by ASO
     public function edit($id)
     {
         $posts = Post::find($id);
@@ -179,6 +193,7 @@ class PostController extends Controller
         $get_group_id=CustomField::where('id',$cfl_group_id);
         return view('admin.post_edit',compact('posts','cat','subcat','cf_values','cf_details','cf_lists','cfl_group_id','get_group_id'));
     }
+
     //store update post
     public function update($id, Request $request)
     {
@@ -204,37 +219,42 @@ class PostController extends Controller
             //'feature_photo' => 'required',
             // 'detail_description' => 'required',
             //'detail_photo' => 'required'
-        ]);
+           ]);
+
         if ($validator->fails()) {
             return redirect()->back()
               ->withInput()
               ->withErrors($validator);
         }
+
         $structure= "upload/posts/";
         $feature_photo="";
         if($request->file('feature_photo')!=NULL){
-          $file = $request->file('feature_photo');
-          if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
-            $feature_photo = $file->getClientOriginalName();
-            $file->move($structure, $feature_photo);
-          }
+            $file = $request->file('feature_photo');
+              if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
+                $feature_photo = $file->getClientOriginalName();
+                $file->move($structure, $feature_photo);
+              }
         }
+
         $attach_file="";
         if($request->file('attach_file')!=NULL){
-          $file = $request->file('attach_file');
-          if($file->getClientOriginalExtension()=="pdf"){
-            $attach_file = $file->getClientOriginalName();
-            $file->move($structure, $attach_file);
-          }
+            $file = $request->file('attach_file');
+            if($file->getClientOriginalExtension()=="pdf"){
+                $attach_file = $file->getClientOriginalName();
+                $file->move($structure, $attach_file);
+              }
         }
+
         $detail_photo="";
         if($request->file('detail_photo')!=NULL){
-          $file = $request->file('detail_photo');
-          if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
-            $detail_photo = $file->getClientOriginalName();
-            $file->move($structure, $detail_photo);
-          }
+            $file = $request->file('detail_photo');
+            if($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="jpeg" || $file->getClientOriginalExtension()=="JPG" || $file->getClientOriginalExtension()=="png" || $file->getClientOriginalExtension()=="PNG" || $file->getClientOriginalExtension()=="gif" || $file->getClientOriginalExtension()=="GIF"){
+                $detail_photo = $file->getClientOriginalName();
+                $file->move($structure, $detail_photo);
+            }
         }
+
         $arr=[
                 'id'=>$id,
                 'title' => $request->title,
@@ -246,8 +266,8 @@ class PostController extends Controller
                 'detail_description' => $request->detail_description,
                 'detail_photo' => $detail_photo,
             ];
+
         $post = Post::findOrFail($id);
-        // $input = $request->all();
         $post->fill($arr)->save();
 
         $cfl_group_id=$request['acf_group'];
@@ -276,67 +296,78 @@ class PostController extends Controller
                    : $request['cf_value5'];
            $new_or_update=CustomFieldValue::where('post_id',$id)->first();
 
+             //check for new or old custom_field list
              if (empty($new_or_update)) {
                  CustomFieldValue::insert($group);
                }
            else {
-                      foreach ($group as $key => $value) {
-                              if ($value!="") {
-                                 $list[$key]=$value;
-                              }
+                      foreach ($group as $key => $value)
+                      {
+                          if ($value!="") {
+                              $list[$key]=$value;
+                           }
                       }
-                     CustomFieldValue::where('post_id',$id)->update($list);
-           }
+                    CustomFieldValue::where('post_id',$id)->update($list);
+                }
       }
 
       if ($get_cf_type!="")
       {
-            for ($i=0; $i < count($get_cf_type) ; $i++) {
-                           $details['post_id']=$id;
-                           $details['cf_name']=$get_cf_name[$i];
-                           $details['cf_type']=$get_cf_type[$i];
-                           if ($get_cf_type[$i]==4) {
-                                          $file = current($get_cf_file);
-                                          $photo=PostController::img_name($file);
-                                          $details['cf_value']=$photo;
-                                          array_shift($get_cf_file);
-                                  }
-                           else {
-                                   $value = current($get_cf_value);
-                                   $details['cf_value']=$value;
-                                   array_shift($get_cf_value);
-                              }
-                        // dd($details);
-                         if ($get_cf_id[$i] > 0) {
-                              $post = CustomFieldDetail::findOrFail($get_cf_id[$i]);
-                              $post= $post->where('id',$get_cf_id[$i])->update($details);
+          for ($i=0; $i < count($get_cf_type) ; $i++)
+           {
+                     $details['post_id']=$id;
+                     $details['cf_name']=$get_cf_name[$i];
+                     $details['cf_type']=$get_cf_type[$i];
+
+                     //check for custom_field type is photo or not
+                     if ($get_cf_type[$i]==4) {
+                                    $file = current($get_cf_file);
+                                    $photo=PostController::img_name($file);
+                                    $details['cf_value']=$photo;
+                                    array_shift($get_cf_file);
                             }
-                       else {
-                              $new_field[]=$details;
-                            }
-            }
+                     else {
+                             $value = current($get_cf_value);
+                             $details['cf_value']=$value;
+                             array_shift($get_cf_value);
+                        }
+
+                     //check for old or new custom_field details
+                     if ($get_cf_id[$i] > 0) {
+                          $post = CustomFieldDetail::findOrFail($get_cf_id[$i]);
+                          $post= $post->where('id',$get_cf_id[$i])->update($details);
+                        }
+                   else {
+                          $new_field[]=$details;
+                        }
+              }
 
             CustomFieldDetail::where('post_id',$id)->whereNotIn('id',$get_cf_id)->delete();
             $insert_id=CustomFieldDetail::insert($new_field);
-      }
-        //return redirect()->route('admin.post');
+       }
+
         echo "<script>
                     alert('Has been created!!');
                     window.location.href='http://localhost/cms-fixes/public/admin/post';
               </script>";
     }
+
     //show post by id
     public function show($id)
     {
         $post = Post::findOrFail($id);
         return view('admin.post_show',compact('post'));
     }
+
     //delete  post
     public function delete($id)
     {
-      $post = Post::find($id)->delete();
-      return redirect()->back()->with('success','Post is successfully deleted!');
+        $post = Post::find($id)->delete();
+        $post = Post::CustomFieldValue('post_id',$id)->delete();
+        $post = Post::CustomFieldDetail('post_id',$id)->delete();
+        return redirect()->back()->with('success','Post is successfully deleted!');
     }
+
     public function search(Request $request)
     {
         $input = $request->all();
