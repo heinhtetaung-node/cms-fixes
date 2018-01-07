@@ -47,38 +47,48 @@ $(document).ready(function(){
   $( "table.myTable" ).delegate( "select.cf_detail_type", "change", function() {
         var val = $(this).val();
         var tr = $(this).closest("tr");
+        var id = tr.find('.cf_detail_id').val();
 
         tr.find('#img').hide();
         tr.find('#input1').hide();
         tr.find('#input1').attr('disabled', 'true');
+        tr.find('#cf_file_id').attr('disabled', 'true');
 
         tr.find('#img').hide();
         tr.find('#input2').hide();
         tr.find('#input2').attr('disabled', 'true');
+        tr.find('#cf_file_id').attr('disabled', 'true');
 
         tr.find('#img').hide();
         tr.find('#input3').hide();
         tr.find('#input3').attr('disabled', 'true');
+        tr.find('#cf_file_id').attr('disabled', 'true');
 
         tr.find('#img').hide();
         tr.find('#input4').hide();
         tr.find('#input4').attr('disabled', 'true');
+        tr.find('#cf_file_id').attr('disabled', 'true');
 
         tr.find('#img').hide();
         tr.find('#input5').hide();
         tr.find('#input5').attr('disabled', 'true');
+        tr.find('#cf_file_id').attr('disabled', 'true');
 
         tr.find('#input'+val).show();
         tr.find('#input'+val).removeAttr('disabled');
-        if (i==4) {
-              tr.find('#img').show();
-				}
 
+        if (val==4 )
+        {
+            tr.find('#cf_file_id').removeAttr('disabled');
+            if (id!=0)
+            {
+               tr.find('#img').show();
+            }
+        }
    });
 
    $('table.myTable > tbody ').delegate('.remove','click',function(){
          del_fields.push($(this).attr("data-id"));
-
          $(this).closest('tr').remove();
          if ($("table.myTable > tbody > tr").length == 0 ) {
              $("table.myTable").hide();
@@ -118,7 +128,7 @@ $(document).ready(function(){
                    }
                    else {
                      alert(response.message);
-                     location.reload();
+                     // location.reload();
                    }
               },
               error: function (jqXHR, textStatus, errorThrown)

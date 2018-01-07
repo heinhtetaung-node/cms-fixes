@@ -4,6 +4,9 @@
           <label class="col-md-2 control-label">{{$acf_group->cf_name1}}</label>
 
           <div class="col-md-10">
+              @if ($acf_group->cf_type1==4 && $value!="")
+                    <img src="{{asset('upload/custom_field/'.$value)}}" style="max-height: 70px">
+              @endif
               {{CustomField_Type($acf_group->cf_type1,'cf_value1',$value)}}
               @if ($errors->has('$value'))
                   <span class="help-block">
@@ -18,6 +21,9 @@
           <label class="col-md-2 control-label">{{$acf_group->cf_name1}}</label>
 
           <div class="col-md-10">
+              @if ($acf_group->cf_type2==4 && $value!="")
+                    <img src="{{asset('upload/custom_field/'.$value)}}" style="max-height: 70px">
+              @endif
               {{CustomField_Type($acf_group->cf_type2,'cf_value2',$value)}}
               @if ($errors->has('$value'))
                   <span class="help-block">
@@ -32,6 +38,9 @@
           <label class="col-md-2 control-label">{{$acf_group->cf_name3}}</label>
 
           <div class="col-md-10">
+              @if ($acf_group->cf_type3==4 && $value!="")
+                    <img src="{{asset('upload/custom_field/'.$value)}}" style="max-height: 70px">
+              @endif
               {{CustomField_Type($acf_group->cf_type3,'cf_value3',$value)}}
               @if ($errors->has('$value'))
                   <span class="help-block">
@@ -46,6 +55,9 @@
           <label class="col-md-2 control-label">{{$acf_group->cf_name4}}</label>
 
           <div class="col-md-10">
+              @if ($acf_group->cf_type4==4 && $value!="")
+                    <img src="{{asset('upload/custom_field/'.$value)}}" style="max-height: 70px">
+              @endif
               {{CustomField_Type($acf_group->cf_type4,'cf_value4',$value)}}
               @if ($errors->has('$value'))
                   <span class="help-block">
@@ -60,6 +72,9 @@
 
           <label class="col-md-2 control-label">{{$acf_group->cf_name5}}</label>
           <div class="col-md-10">
+              @if ($acf_group->cf_type5==4 && $value!="")
+                    <img src="{{asset('upload/custom_field/'.$value)}}" style="max-height: 70px">
+              @endif
               {{CustomField_Type($acf_group->cf_type5,'cf_value5',$value)}}
               @if ($errors->has('$value'))
                   <span class="help-block">
@@ -82,8 +97,6 @@
                     echo "<input type='date' class='form-control cf_value' name='$name' value='$value' >";
                   break;
                  case 4:
-                     $img=asset("upload/custom_field/$value");
-                     echo "<img src='$img' style='max-height: 70px'>";
                      echo "<input type='file' class='form-control cf_value' name='$name' value='$value' >";
                   break;
                   case 5:

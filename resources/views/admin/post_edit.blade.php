@@ -206,18 +206,23 @@
 			$('table.myTable > tbody > tr').each(function(){
 				var i=$(this).find('.cf_detail_type').val();
 
+        $(this).find('#img').hide();
 				$(this).find('#input1').hide();
 				$(this).find('#input1').attr('disabled', 'true');
 
+        $(this).find('#img').hide();
 				$(this).find('#input2').hide();
 				$(this).find('#input2').attr('disabled', 'true');
 
+        $(this).find('#img').hide();
 				$(this).find('#input3').hide();
 				$(this).find('#input3').attr('disabled', 'true');
 
+        $(this).find('#img').hide();
 				$(this).find('#input4').hide();
 				$(this).find('#input4').attr('disabled', 'true');
 
+        $(this).find('#img').hide();
 				$(this).find('#input5').hide();
 				$(this).find('#input5').attr('disabled', 'true');
 
@@ -229,11 +234,6 @@
 				}
 
 			});
-
-
-			if ($("table.myTable > tbody > tr").length == 0) {
-					 $("table.myTable").hide();
-			}
 
 			if ($('.acf_group').val()!=0) {
 					 var val = $('select.acf_group').val();
@@ -266,7 +266,15 @@
   </script>
 @endsection
 <?php
-    function customField_details($name,$type,$value,$id) {
+    function customField_details($name,$type,$value,$id)
+		{
+			   $src="";
+			   if ($type==4 && $id!=0)
+				 {
+					  $src=asset("upload/custom_field/$value");
+			   }
+         $img="<img src='$src' id='img' style='max-height: 70px' style='display:none'>";
+
          switch ($type) {
              case 1:
 									 echo "<tr><td>";
@@ -285,6 +293,7 @@
 																			 </select>
 																 </div>
 																 <div class='col-md-5'>
+																       $img
 																			 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none' value='$value' >
 																			 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
 																			 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
@@ -314,6 +323,7 @@
 																		 </select>
 															 </div>
 															 <div class='col-md-5'>
+															       $img
 																		 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
 																		 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' value='$value' style='display:none' >
 																		 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
@@ -343,6 +353,7 @@
 																		 </select>
 															 </div>
 															 <div class='col-md-5'>
+															       $img
 																		 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
 																		 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
 																		 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' value='$value' style='display:none' >
@@ -356,7 +367,6 @@
 													</td></tr>";
 			                 break;
            case 4:
-								 $img=asset("upload/custom_field/$value");
 								 echo "<tr><td>";
 								 echo "<input type='hidden' name='cf_detail_id[]' class='cf_detail_id' value='$id'>";
 								 echo	"<div class='form-group'>
@@ -373,11 +383,13 @@
 																		 </select>
 															 </div>
 															 <div class='col-md-5'>
-															       <img src='$img' id='img' style='max-height: 70px' style='display:none'>
+															       $img
 																		 <input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
 																		 <input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
 																		 <input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >
-																		 <input type='file' name='cf_file[]' class='form-control cf_detail_value' id='input4' value='$value' style='display:none' >
+																		 <input type='file' name='cf_file_old[]' class='form-control cf_detail_value' id='input4' value='$value' style='display:none' >
+																		 <input type='hidden' name='cf_file_id[]' class='form-control cf_file_id' value='$id'>
+																		 <input type='hidden' name='cf_detail_value[]' class='form-control cf_detail_value' value='$value'>
 																		 <textarea name='cf_detail_value[]' rows='5' cols='50' class='form-control cf_detail_value' id='input5' style='display:none ' ></textarea>
 															 </div>
 															 <div  class='col-md-1'>
@@ -403,6 +415,7 @@
 																			</select>
 																</div>
 																<div class='col-md-5'>
+																      $img
 																			<input type='text' name='cf_detail_value[]' class='form-control cf_detail_value' id='input1' style='display:none'  >
 																			<input type='number' name='cf_detail_value[]' class='form-control cf_detail_value' id='input2' style='display:none' >
 																			<input type='date' name='cf_detail_value[]' class='form-control cf_detail_value' id='input3' style='display:none' >

@@ -1,12 +1,12 @@
 <tr>
   <td>
     <input type="hidden" name="cf_detail_id[]" class="cf_detail_id" value="0">
-    <div class="form-group{{ $errors->has('detail_photo') ? ' has-error' : '' }}">
+    <div class="form-group{{ $errors->has('cf_detail_name') ? ' has-error' : '' }}">
           <div class="col-md-3">
               <input type="text" name="cf_detail_name[]" class="form-control cf_detail_name" required>
               @if ($errors->has('cf_detail_name'))
                   <span class="help-block">
-                      <strong>{{ $errors->old('cf_detail_name') }}</strong>
+                      <strong>{{ $errors->first('cf_detail_name') }}</strong>
                   </span>
               @endif
           </div>
@@ -20,7 +20,7 @@
                     </select>
                     @if ($errors->has('cf_detail_type'))
                         <span class="help-block">
-                            <strong>{{ $errors->old('cf_detail_type') }}</strong>
+                            <strong>{{ $errors->first('cf_detail_type') }}</strong>
                         </span>
                     @endif
           </div>
@@ -28,11 +28,12 @@
                   <input type="text" name="cf_detail_value[]" class="form-control cf_detail_value" id="input1" style="display:none" required>
                   <input type="number" name="cf_detail_value[]" class="form-control cf_detail_value" id="input2" style="display:none" required>
                   <input type="date" name="cf_detail_value[]" class="form-control cf_detail_value" id="input3" style="display:none" required>
-                  <input type="file" name="cf_file[]" class="form-control cf_detail_value" id="input4" style="display:none" multiple required>
+                  <input type="file" name="cf_file[]" class="form-control cf_detail_value" id="input4" style="display:none" required>
+                  <input type='hidden' name='cf_file_id[]' class='form-control' id='cf_file_id' value='0'>
                   <textarea name="cf_detail_value[]" rows="5" cols="50" class="form-control cf_detail_value" id="input5" style="display:none" required></textarea>
                     @if ($errors->has('cf_detail_value'))
                         <span class="help-block">
-                            <strong>{{ $errors->old('cf_detail_value') }}</strong>
+                            <strong>{{ $errors->first('cf_detail_value') }}</strong>
                         </span>
                     @endif
           </div>
