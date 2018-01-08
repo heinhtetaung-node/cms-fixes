@@ -286,10 +286,6 @@
 																 <div class='col-md-3'>
 																      <select class='form-control cf_detail_type' name='cf_detail_type[]' >
 																					 <option value='1' selected>Text</option>
-																					 <option value='2'>Number</option>
-																					 <option value='3'>Date</option>
-																					 <option value='4'>Image/File</option>
-																					 <option value='5'>Textarea</option>
 																			 </select>
 																 </div>
 																 <div class='col-md-5'>
@@ -315,11 +311,7 @@
 															 </div>
 															 <div class='col-md-3'>
 																		<select class='form-control cf_detail_type' name='cf_detail_type[]' >
-																				 <option value='1'>Text</option>
 																				 <option value='2' selected>Number</option>
-																				 <option value='3'>Date</option>
-																				 <option value='4'>Image/File</option>
-																				 <option value='5'>Textarea</option>
 																		 </select>
 															 </div>
 															 <div class='col-md-5'>
@@ -345,11 +337,7 @@
 															 </div>
 															 <div class='col-md-3'>
 																		<select class='form-control cf_detail_type' name='cf_detail_type[]' >
-																				 <option value='1'>Text</option>
-																				 <option value='2'>Number</option>
 																				 <option value='3' selected>Date</option>
-																				 <option value='4'>Image/File</option>
-																				 <option value='5'>Textarea</option>
 																		 </select>
 															 </div>
 															 <div class='col-md-5'>
@@ -375,11 +363,7 @@
 															 </div>
 															 <div class='col-md-3'>
 																		<select class='form-control cf_detail_type' name='cf_detail_type[]' >
-																				 <option value='1'>Text</option>
-																				 <option value='2'>Number</option>
-																				 <option value='3'>Date</option>
 																				 <option value='4' selected>Image/File</option>
-																				 <option value='5'>Textarea</option>
 																		 </select>
 															 </div>
 															 <div class='col-md-5'>
@@ -407,10 +391,6 @@
 																</div>
 																<div class='col-md-3'>
 																		 <select class='form-control cf_detail_type' name='cf_detail_type[]' >
-																					<option value='1'>Text</option>
-																					<option value='2'>Number</option>
-																					<option value='3'>Date</option>
-																					<option value='4'>Image/File</option>
 																					<option value='5' selected>Textarea</option>
 																			</select>
 																</div>
