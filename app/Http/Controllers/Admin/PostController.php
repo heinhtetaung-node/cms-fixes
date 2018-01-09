@@ -47,7 +47,6 @@ class PostController extends Controller
         return view('admin.post_create', array('cat' => $cat, 'subcat'=>$subcat,'acf'=>$acf));
     }
     public function store(Request $request){
-       
         // 'title', 'main_category_id', 'sub_category_id', 'short_description', 'feature_photo', 'detail_description', 'detail_photo', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'custom_field5'
         $get_cf_name=(isset($request['cf_detail_name']) ? $request['cf_detail_name']  : "");
         $get_cf_type=(isset($request['cf_detail_type']) ? $request['cf_detail_type']  : "");
@@ -167,7 +166,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $posts = Post::find($id);
-        $cat = Category::where('parent_id', '0')->orderBy('parent_id', 'asc')->get();
+        //$cat = Category::where('parent_id', '0')->orderBy('parent_id', 'asc')->get();
         $subcat = Category::where('parent_id','!=', '0')->orderBy('parent_id', 'asc')->get();
         $cf_values=CustomFieldValue::where('post_id',$id)->first();
         $cf_details=CustomFieldDetail::where('post_id',$id)->get();

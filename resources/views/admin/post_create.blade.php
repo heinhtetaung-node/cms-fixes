@@ -230,6 +230,7 @@
                 else
                 {
                     $('.sub_cat').hide();
+                    $('#sub_category_div').hide();   
                 }
             }      
         });

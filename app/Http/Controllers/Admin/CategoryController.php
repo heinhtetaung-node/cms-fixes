@@ -118,7 +118,12 @@ class CategoryController extends Controller
 
 
   public function sub_cat($id)
-  {
+  { 
+    return view('admin.category.sub_cat')->with('id',$id);
+  }
+
+  public function parameter_sub_cat($edit_id,$id)
+  { 
     return view('admin.category.sub_cat')->with('id',$id);
   }
 

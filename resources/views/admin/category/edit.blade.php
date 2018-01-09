@@ -31,19 +31,19 @@
 							$s_id=$self_id;
 						}
 					?>
-				<input type="hidden"  class="length" value="{{sizeof($output)}}">
-				<div>
-					<!-- to show parents -->
-				 	<select class="form-control parent_category" style="width:400px;">
-					   @if($length>0)
-							{!! CategoriesFunctions::edit_parent_categories($id); !!}
-						@endif
-					</select>
-				</div>
+				@if($length!=0)				
+					<input type="hidden"  class="length" value="{{sizeof($output)}}">
+					<div>
+						<!-- to show parents -->
+					 	<select class="form-control parent_category" style="width:400px;">
+								{!! CategoriesFunctions::edit_parent_categories($id); !!}
+						</select>
+					</div>
+				@endif
 					<br><br>
 					<!-- to show sub-categories -->
 					@if($length>1)
-					<select class="form-control sub_category" style="width:400px;">
+					<select class="form-control sub_categories" style="width:400px;">
 						{!! CategoriesFunctions::editt_sub_category($s_id,$id,$sub_id); !!}
 					</select>
 					@endif
@@ -71,7 +71,7 @@
 		{
 			$sub_val=$('.parent_category').val();
 		}
-		else if(size==0)
+		else if(size==null)
 		{
 			$sub_val=0;
 		}
@@ -83,9 +83,9 @@
 		$('.add_category').delegate('.parent_category', 'change', function(){
 				changed=1;
 				$val=$(this).val();
-				$('.sub_category').hide();
+				$('.sub_categories').hide();
 				jQuery.ajax({
-					url : "http://localhost/cms-fixes/public/admin/sub_cat/"+$val,
+					url : "http://localhost/cms-fixes/public/admin/category/edit/sub_cat/"+$val,
 					type : "GET",
 					dataType : "html",
 					success: function(data){
@@ -101,11 +101,11 @@
 					}
 				});
 		});
-		$('.add_category').delegate('.sub_category', 'change', function() {
+		$('.add_category').delegate('.sub_categories', 'change', function() {
 			sub_changed=1;
 			$sub_val=$(this).val();
 		});
-
+			//alert($sub_val);
 		jQuery(".product_update").click(function(){
 			if(sub_changed!=1 && changed==1)
 			{
