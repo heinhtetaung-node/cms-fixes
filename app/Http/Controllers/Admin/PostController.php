@@ -46,8 +46,7 @@ class PostController extends Controller
         $subcat = Category::where('parent_id','!=', '0')->orderBy('parent_id', 'asc')->get();
         return view('admin.post_create', array('cat' => $cat, 'subcat'=>$subcat,'acf'=>$acf));
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         // 'title', 'main_category_id', 'sub_category_id', 'short_description', 'feature_photo', 'detail_description', 'detail_photo', 'custom_field1', 'custom_field2', 'custom_field3', 'custom_field4', 'custom_field5'
         $request['cf_value1']=(isset($request['cf_value1']) ? $request['cf_value1']  : "");
         $request['cf_value2']=(isset($request['cf_value2']) ? $request['cf_value2']  : "");
@@ -61,7 +60,7 @@ class PostController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'main_category_id' => 'required',
+            'category_id' => 'required',
             'short_description' => 'required',
             'feature_photo' => 'required',
             'detail_description' => 'required',
@@ -72,8 +71,8 @@ class PostController extends Controller
             return redirect()->back()
               ->withInput()
               ->withErrors($validator);
-        }
-
+        }        
+          //dd($request->all());
         $structure= "upload/posts/";
         $feature_photo="";
 
@@ -105,7 +104,7 @@ class PostController extends Controller
 
         $arr=[
                 'title' => $request->title,
-                'main_category_id' => $request->main_category_id,
+                'main_category_id' => $request->category_id,
                 'sub_category_id' => ($request->sub_category_id)?$request->sub_category_id : '0',
                 'short_description' => ($request->short_description)? $request->short_description : '',
                 'feature_photo' => $feature_photo,
@@ -163,10 +162,8 @@ class PostController extends Controller
 
             CustomFieldDetail::insert($post_details);
         }
-
-        echo "<script>
-                    alert('Has been created!!');
-                    window.location.href='http://localhost/cms-fixes/public/admin/post';
+        //return redirect()->route('admin.post');
+        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."';
               </script>";
     }
 
@@ -184,7 +181,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $posts = Post::find($id);
-        $cat = Category::where('parent_id', '0')->orderBy('parent_id', 'asc')->get();
+        //$cat = Category::where('parent_id', '0')->orderBy('parent_id', 'asc')->get();
         $subcat = Category::where('parent_id','!=', '0')->orderBy('parent_id', 'asc')->get();
         $cf_values=CustomFieldValue::where('post_id',$id)->first();
         $cf_details=CustomFieldDetail::where('post_id',$id)->get();
@@ -384,11 +381,9 @@ class PostController extends Controller
 
             CustomFieldDetail::where('post_id',$id)->whereNotIn('id',$get_cf_id)->delete();
             $insert_id=CustomFieldDetail::insert($new_field);
-       }
-
-        echo "<script>
-                    alert('Has been updated!!');
-                    window.location.href='http://localhost/cms-fixes/public/admin/post';
+      }
+        //return redirect()->route('admin.post');
+        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."';
               </script>";
     }
 
