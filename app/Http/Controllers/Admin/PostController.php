@@ -148,9 +148,7 @@ class PostController extends Controller
             CustomFieldDetail::insert($post_details);
         }
         //return redirect()->route('admin.post');
-        echo "<script>
-                    alert('Has been created!!');
-                    window.location.href='".url('admin/post')."';
+        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."';
               </script>";
     }
     function img_name($file)
@@ -315,9 +313,7 @@ class PostController extends Controller
             $insert_id=CustomFieldDetail::insert($new_field);
       }
         //return redirect()->route('admin.post');
-        echo "<script>
-                    alert('Has been created!!');
-                    window.location.href='".url('admin/post')."';
+        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."';
               </script>";
     }
     //show post by id

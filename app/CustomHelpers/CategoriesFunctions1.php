@@ -122,7 +122,7 @@ class CategoriesFunctions1
 		$output=Category::where('parent_id','=',0)->get();
 		foreach($output as $c)
 		{	
-			echo "--".$c->title.'&nbsp;&nbsp;[<a href="http://localhost/cms-fixes/public/admin/category/edit/'.$c->id.'">edit</a>]';
+			echo "--".$c->title.'&nbsp;&nbsp;[<a href="'.url('admin').'/category/edit/'.$c->id.'">edit</a>]';
 			echo "<br><br>";		
 			self::editSubCategories($c->id);			
      	}
@@ -138,7 +138,7 @@ class CategoriesFunctions1
 			{
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";	
 			}
-			echo '--'.$s->title.'&nbsp;&nbsp;[<a href="http://localhost/cms-fixes/public/admin/category/edit/'.$s->id.'">edit</a>]  [<a href="http://localhost/cms-fixes/public/admin/category/delete/'.$s->id.'">Delete</a>]';
+			echo '--'.$s->title.'&nbsp;&nbsp;[<a href="'.url('admin').'/category/edit/'.$s->id.'">edit</a>]  [<a href="'.url('admin').'/category/delete/'.$s->id.'">Delete</a>]';
 			echo "<br><br>";
          	self::editSubCategories($s->id);          	        
      	}

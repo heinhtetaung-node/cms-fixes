@@ -100,7 +100,7 @@ $sub_category_id = (isset($_GET['sub_category_id']))? $_GET['sub_category_id'] :
         $sub_val=$(this).val();     
         $val=$(this).val(); 
         jQuery.ajax({
-            url : "sub_cat/"+$val,
+            url : "{{url('admin/post')}}/sub_cat/"+$val,
             type : "GET",
             dataType : "html",
             success: function(data){ 

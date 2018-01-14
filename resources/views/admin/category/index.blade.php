@@ -68,9 +68,10 @@
 				</tbody> 
 			</table>-->
 			<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
+			<div class="well">
 			 {!! CategoriesFunctions::edit_sub_category(); !!}
 			<input type="hidden">
-
+			</div>
 		</div>
 		
 	</div>

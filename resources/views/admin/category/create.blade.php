@@ -22,12 +22,13 @@
             </div>  
         </div>
         <div class="row">
-             <!-- for success message -->
-            @if ($message = Session::get('success'))
-              <div class="alert alert-success">
-                  <p>{{ $message }}</p>
-              </div>
-             @endif         
+            <!-- for success message -->
+            <div class="well">
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif         
                 <div class="form-group add_category" style="margin-top: 30px;">
                     <input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
                     <label>Insert category</label>
@@ -39,7 +40,8 @@
                     <br><br>
                     <div class="sub_cat"></div>
                     <input type="button" class="btn btn-success product_save" value="Save">
-                </div>   
+                </div> 
+            </div>  
         </div>
     </div>
 </div>
@@ -55,7 +57,7 @@
             $sub_val=$(this).val();     
             $val=$(this).val(); 
             jQuery.ajax({
-                url : "sub_cat/"+$val,
+                url : "{{url('admin')}}/category/edit/sub_cat/"+$val,
                 type : "GET",
                 dataType : "html",
                 success: function(data){
@@ -77,7 +79,7 @@
         });         
         jQuery(".product_save").click(function(){
             jQuery.ajax({
-                    url : "http://localhost/cms-fixes/public/admin/category/create",
+                    url : "{{url('admin')}}/category/create",
                     type : "POST",
                     data : {
                             parent_cat : $sub_val,
@@ -87,7 +89,7 @@
                     dataType: "json",
                     success:function(data){
                         alert(data.message);
-                        window.location="http://localhost/cms-fixes/public/admin/category";
+                        window.location="{{url('admin')}}/category";
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {

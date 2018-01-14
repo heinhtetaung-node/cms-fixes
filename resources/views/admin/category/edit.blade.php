@@ -15,43 +15,45 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group add_category" style="margin-top: 30px;">
-				<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
-				<label>Category</label>
-				<input type="text" class="form-control name" style="width: 200px;" value="{{$name}}">
-				<input type="hidden"  class="id" value="{{$self_id}}">
-				<br>
-					<?php
-						//dd($output);
-						$length=sizeof($output);
-						if($length!=0)
-						{
-							$id=$output[$length-1];
-							$sub_id=$output[0];
-							$s_id=$self_id;
-						}
-					?>
-				@if($length!=0)				
-					<input type="hidden"  class="length" value="{{sizeof($output)}}">
-					<div>
-						<!-- to show parents -->
-					 	<select class="form-control parent_category" style="width:400px;">
-								{!! CategoriesFunctions::edit_parent_categories($id); !!}
-						</select>
-					</div>
-				@endif
-					<br><br>
-					<!-- to show sub-categories -->
-					@if($length>1)
-					<select class="form-control sub_categories" style="width:400px;">
-						{!! CategoriesFunctions::editt_sub_category($s_id,$id,$sub_id); !!}
-					</select>
-					@endif
-				<div class="sub_cat">
-					<!-- to show sub of sub-categories -->
-				</div>
+			<div class="well">
+				<div class="form-group add_category" style="margin-top: 30px;">
+					<input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
+					<label>Category</label>
+					<input type="text" class="form-control name" style="width: 200px;" value="{{$name}}">
+					<input type="hidden"  class="id" value="{{$self_id}}">
 					<br>
-				<input type="button" class="btn btn-success product_update" value="Update">
+						<?php
+							//dd($output);
+							$length=sizeof($output);
+							if($length!=0)
+							{
+								$id=$output[$length-1];
+								$sub_id=$output[0];
+								$s_id=$self_id;
+							}
+						?>
+					@if($length!=0)				
+						<input type="hidden"  class="length" value="{{sizeof($output)}}">
+						<div>
+							<!-- to show parents -->
+						 	<select class="form-control parent_category" style="width:400px;">
+									{!! CategoriesFunctions::edit_parent_categories($id); !!}
+							</select>
+						</div>
+					@endif
+						<br><br>
+						<!-- to show sub-categories -->
+						@if($length>1)
+						<select class="form-control sub_categories" style="width:400px;">
+							{!! CategoriesFunctions::editt_sub_category($s_id,$id,$sub_id); !!}
+						</select>
+						@endif
+					<div class="sub_cat">
+						<!-- to show sub of sub-categories -->
+					</div>
+						<br>
+					<input type="button" class="btn btn-success product_update" value="Update">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -85,7 +87,7 @@
 				$val=$(this).val();
 				$('.sub_categories').hide();
 				jQuery.ajax({
-					url : "http://localhost/cms-fixes/public/admin/category/edit/sub_cat/"+$val,
+					url : "{{url('admin')}}/category/edit/sub_cat/"+$val,
 					type : "GET",
 					dataType : "html",
 					success: function(data){
@@ -113,7 +115,7 @@
 			}
 			$id=$('.id').val();
 			jQuery.ajax({
-					url : "http://localhost/cms-fixes/public/admin/category/update",
+					url : "{{url('admin')}}/category/update",
 					type : "POST",
 					data : {
 						parent_cat : $sub_val,
@@ -126,7 +128,7 @@
 					dataType: "json",
 					success:function(data){
                         alert(data.message);
-                        window.location="http://localhost/cms-fixes/public/admin/category";
+                        window.location="{{url('admin')}}/category";
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
