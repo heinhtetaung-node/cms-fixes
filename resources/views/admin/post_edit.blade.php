@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.post.update',$posts->id) }}">
+			<form class="form-horizontal add_category" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.post.update',$posts->id) }}">
                 {!! csrf_field() !!}
 				<input type="hidden" class="post_id" name="post_id" value="{{$posts->id}}">
 				<div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -31,18 +31,16 @@
                         @endif
                     </div>
                 </div>
-
+                    <?php 
+                    $id=$posts->main_category_id;            
+                    ?>
                 <div class="form-group{{ $errors->has('main_category_id') ? ' has-error' : '' }}">
                     <label class="col-md-2 control-label">Main Category</label>
 
                     <div class="col-md-9">
-                        <select id="ctr_parent_id" class="form-control" name="main_category_id">
-                            <option value="{{$posts->Category->id}}">{{$posts->Category->title}}</option>
-                            @foreach($cat as $c)
-                                @if($posts->Category->id!=$c->id)
-                                    <option value="{{ $c->id }}">{{ $c->title }}</option>
-                                @endif
-                            @endforeach
+                        
+                        <select class="form-control parent_category" name="main_category_id" id="ctr_parent_id">
+                            {!! CategoriesFunctions::edit_parent_categories($id); !!}
                         </select>
                         @if ($errors->has('main_category_id'))
                             <span class="help-block">
@@ -51,13 +49,12 @@
                         @endif
                     </div>
                 </div>
-
-                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}">
+                @if($posts->sub_category_id!=0)
+                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}" id="original_sub_categoires">
                     <label class="col-md-2 control-label">Sub Category</label>
-
                     <div class="col-md-9">
                         <select id="ctr_sub_id" class="form-control" name="sub_category_id">
-                            <option value="{{ isset($posts->SubCategory->id) ? $posts->SubCategory->id : ''}}">{{ isset($posts->SubCategory->title)? $posts->SubCategory->title : '' }}</option>
+                            <option value="{{ isset($posts->SubCategory->id) ? $posts->SubCategory->id : ''}}" selected>{{ isset($posts->SubCategory->title)? $posts->SubCategory->title : '' }}</option>
 
                             @foreach($subcat as $sc)
                                 @if($sc->parent_id==$posts->main_category_id && $posts->SubCategory->id!=$sc->id))
@@ -65,6 +62,13 @@
                                 @endif
                             @endforeach
                         </select>
+                      </div>
+                </div>
+                @endif
+                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}" id="sub_category_div">
+                    <label class="col-md-2 control-label">Sub Category</label>
+                    <div class="col-md-9 sub_cat">
+
                     </div>
                 </div>
 
@@ -236,10 +240,12 @@
 			});
 
 			if ($('.acf_group').val()!=0) {
+
 					 var val = $('select.acf_group').val();
+           cusurl = "{{ url("admin/custom_field") }}/get_acf_group/"+val;
 					 var post_id = ($('.post_id').val() ? $('.post_id').val() : '');
 					 $.ajax({
-								 url : 'http://localhost/cms-fixes/public/admin/custom_field/get_acf_group/'+val,
+								 url : cusurl,
 								 type: 'GET',
 								 dataType : 'html',
 								 data : {
@@ -263,6 +269,37 @@
                focus: true
         });
     });
+
+$('#sub_category_div').hide();
+    $sub_val=0;
+    $('#ctr_sub_id').val(0);
+    $('.add_category').delegate('.parent_category', 'change', function(){
+        $('#original_sub_categoires').hide();
+        $sub_val=$(this).val();     
+        $val=$(this).val(); 
+        jQuery.ajax({
+            url : "edit/sub_cat/"+$val,
+            type : "GET",
+            dataType : "html",
+            success: function(data){ 
+                //alert(data.length);
+                if(data.length >209)
+                {
+                    $('.sub_cat').html(data);
+                    $('#sub_category_div').show();   
+                    $('.sub_cat').show();                
+                }
+                else
+                {
+                    $('.sub_cat').hide();
+                    $('#sub_category_div').hide();   
+                }
+            }      
+        });
+    });
+    $('.add_category').delegate('.sub_categories', 'change', function() {   
+            $sub_val=$(this).val();
+    }); 
   </script>
 @endsection
 <?php

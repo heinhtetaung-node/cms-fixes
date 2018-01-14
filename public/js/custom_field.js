@@ -1,3 +1,11 @@
+host = window.location.hostname; // you'll get sub.domain.com
+protocol = window.location.protocol; // you'll get http or https
+port = location.port ? ':'+location.port+'/' : '/'; // you'll get port number 8000 or sth
+fullhost = protocol+"//"+host;
+
+fulladminurl = fullhost+port+'admin/';
+fulladminurl = protocol+"//"+host+""+port+"cms-fixes/public/admin/";  // use in local
+
 $(document).ready(function(){
   var del_fields =[];
 
@@ -8,9 +16,8 @@ $(document).ready(function(){
              $('.acf_group_value').html('');
              return;
          }
-
          $.ajax({
-               url : 'http://localhost/cms-fixes/public/admin/custom_field/get_acf_group/'+val,
+               url : fulladminurl+'custom_field/get_acf_group/'+val,
                type: 'GET',
                dataType : 'html',
                data : {
@@ -29,7 +36,7 @@ $(document).ready(function(){
 
   $(".add_acf_detail").click(function(){
         $.ajax({
-              url : 'http://localhost/cms-fixes/public/admin/custom_field/add_acf_detail',
+              url : fulladminurl+'custom_field/add_acf_detail',
               type: 'GET',
               dataType : 'html',
               success: function(response)
@@ -124,7 +131,7 @@ $(document).ready(function(){
               {
                    if (response.status==0) {
                         alert(response.message);
-                        window.location="http://localhost/cms-fixes/public/admin/custom_field";
+                        window.location=fulladminurl+"custom_field";
                    }
                    else {
                      alert(response.message);

@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.post.store') }}">
+			<form class="form-horizontal add_category" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.post.store') }}">
                 {!! csrf_field() !!}
 				<div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                     <label class="col-md-2 control-label">Post Title</label>
@@ -31,36 +31,40 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('main_category_id') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('category_id') ? ' has-error' : '' }}">
                     <label class="col-md-2 control-label">Main Category</label>
 
                     <div class="col-md-9">
-                        <select id="ctr_parent_id" class="form-control" name="main_category_id">
+                        <select class="form-control parent_category" name="category_id" >
+                            <option>Please select parent category</option>
+                            {!! CategoriesFunctions::parent_categories(); !!}
+                        </select>
+                        <!-- <select id="ctr_parent_id" class="form-control" name="main_category_id">
                             <option value="old('main_category_id') }}"></option>
                             @foreach($cat as $c)
                                 <option value="{{ $c->id }}">{{ $c->title }}</option>
                             @endforeach
-                        </select>
-                        @if ($errors->has('main_category_id'))
+                        </select> -->
+                        <!-- @if ($errors->has('main_category_id'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('main_category_id') }}</strong>
                             </span>
-                        @endif
+                        @endif -->
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-error' : '' }}" id="sub_category_div">
                     <label class="col-md-2 control-label">Sub Category</label>
 
-                    <div class="col-md-9">
-                        <select id="ctr_sub_id" class="form-control" name="sub_category_id">
+                    <div class="col-md-9 sub_cat">
+                        <!-- <select id="ctr_sub_id" class="form-control" name="sub_category_id">
                             <option value="{{old('sub_category_id')}}"></option>
 
-                           <!--  @foreach($subcat as $sc)
+                            @foreach($subcat as $sc)
                                 <option value="{{ $sc->id }}">{{ $sc->title }}</option>
-                            @endforeach -->
+                            @endforeach
 
-                        </select>
+                        </select> -->
                     </div>
                 </div>
 
@@ -209,6 +213,33 @@
                maxHeight: null,             // set maximum height of editor
                focus: true
         });
+        $('#sub_category_div').hide();
     });
+    $sub_val=0;
+    $('.add_category').delegate('.parent_category', 'change', function(){
+        $sub_val=$(this).val();     
+        $val=$(this).val(); 
+        jQuery.ajax({
+            url : "sub_cat/"+$val,
+            type : "GET",
+            dataType : "html",
+            success: function(data){ 
+                if(data.length >209)
+                {
+                    $('.sub_cat').html(data);
+                    $('#sub_category_div').show();   
+                    $('.sub_cat').show();                
+                }
+                else
+                {
+                    $('.sub_cat').hide();
+                    $('#sub_category_div').hide();   
+                }
+            }      
+        });
+    });
+    $('.add_category').delegate('.sub_categories', 'change', function() {   
+            $sub_val=$(this).val();
+    }); 
   </script>
 @endsection

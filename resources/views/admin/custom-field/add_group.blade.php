@@ -8,7 +8,7 @@
                     <input type="hidden" name="_token"  id="ctr_token" value="{{ csrf_token() }}">
 
                     <div class="form-group{{ $errors->has('g_name') ? ' has-error' : '' }}">
-                        <label class="col-md-2 control-label">Custom Field Name :</label>
+                        <label class="col-md-2 control-label">Custom Field Group :</label>
 
                         <div class="col-md-9">
                             <input type="text" class="form-control g_name" value="{{old('group_name')}}" name="g_name">@if ($errors->has('group_name'))
