@@ -71,8 +71,8 @@ class PostController extends Controller
             return redirect()->back()
               ->withInput()
               ->withErrors($validator);
-        }        
-          //dd($request->all());
+        }
+
         $structure= "upload/posts/";
         $feature_photo="";
 
@@ -162,9 +162,7 @@ class PostController extends Controller
 
             CustomFieldDetail::insert($post_details);
         }
-        //return redirect()->route('admin.post');
-        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."';
-              </script>";
+        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."'; </script>";
     }
 
     function img_name($file)
@@ -382,9 +380,7 @@ class PostController extends Controller
             CustomFieldDetail::where('post_id',$id)->whereNotIn('id',$get_cf_id)->delete();
             $insert_id=CustomFieldDetail::insert($new_field);
       }
-        //return redirect()->route('admin.post');
-        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."';
-              </script>";
+        echo "<script> alert('Has been created!!'); window.location.href='".route('admin.post')."'; </script>";
     }
 
     //show post by id
