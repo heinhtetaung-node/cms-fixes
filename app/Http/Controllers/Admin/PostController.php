@@ -150,7 +150,7 @@ class PostController extends Controller
         //return redirect()->route('admin.post');
         echo "<script>
                     alert('Has been created!!');
-                    window.location.href='http://localhost/cms-fixes/public/admin/post';
+                    window.location.href='".url('admin/post')."';
               </script>";
     }
     function img_name($file)
@@ -317,7 +317,7 @@ class PostController extends Controller
         //return redirect()->route('admin.post');
         echo "<script>
                     alert('Has been created!!');
-                    window.location.href='http://localhost/cms-fixes/public/admin/post';
+                    window.location.href='".url('admin/post')."';
               </script>";
     }
     //show post by id

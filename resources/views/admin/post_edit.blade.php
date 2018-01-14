@@ -241,10 +241,12 @@
 			}
 
 			if ($('.acf_group').val()!=0) {
+
 					 var val = $('select.acf_group').val();
+           cusurl = "{{ url("admin/custom_field") }}/get_acf_group/"+val;
 					 var post_id = ($('.post_id').val() ? $('.post_id').val() : '');
 					 $.ajax({
-								 url : 'http://localhost/cms-fixes/public/admin/custom_field/get_acf_group/'+val,
+								 url : cusurl,
 								 type: 'GET',
 								 dataType : 'html',
 								 data : {

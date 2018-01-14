@@ -96,7 +96,7 @@
 				$val=$(this).val();
 				$('.sub_category').hide();
 				jQuery.ajax({
-					url : "http://localhost/cms-fixes/public/admin/sub_cat/"+$val,
+					url : "{{ url('admin/sub_cat') }}/"+$val,
 					type : "GET",
 					dataType : "html",
 					success: function(data){
@@ -116,7 +116,7 @@
 			}
 			$id=$('.id').val();
 			jQuery.ajax({
-					url : "http://localhost/cms-fixes/public/admin/category/update",
+					url : "{{ url('admin/category/update') }}",
 					type : "POST",
 					data : {
 						parent_cat : $sub_val,

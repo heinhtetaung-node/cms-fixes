@@ -106,7 +106,7 @@ class CustomFieldController extends Controller
             CustomField::where('id',$id)->update($group);
             echo "<script>
                         alert('Has been updated!!');
-                        window.location.href='http://localhost/cms-fixes/public/admin/custom_field';
+                        window.location.href='".url('admin/custom_field')."';
                   </script>";
      }
 
@@ -115,7 +115,7 @@ class CustomFieldController extends Controller
            CustomField::destroy($id);
            echo "<script>
                        alert('Has been deleted!!');
-                       window.location.href='http://localhost/cms-fixes/public/admin/custom_field';
+                       window.location.href='".url('admin/custom_field')."';
                  </script>";
      }
 }

@@ -86,7 +86,7 @@
         <label>Insert category</label>
         <input type="text" class="form-control name" style="width: 200px;"><br>
         <select class="form-control parent_category" style="width:400px;">
-            <option>Please select parent category</option>
+            <option value="0">Please select parent category</option>
             {!! CategoriesFunctions::parent_categories(); !!}
         </select>
         <br><br>
@@ -107,11 +107,12 @@
 @parent
 <!-- your custom script here -->
 <script type="text/javascript">
+        $sub_val = 0;
         $(".parent_category").change(function(){    
                 $sub_val=$(this).val();     
                 $val=$(this).val(); 
                 jQuery.ajax({
-                    url : "http://localhost/cms-fixes/public/admin/sub_cat/"+$val,
+                    url : "{{ url('admin/sub_cat') }}/"+$val,
                     type : "GET",
                     dataType : "html",
                     success: function(data){ 
@@ -125,10 +126,13 @@
 
         jQuery(".product_save").click(function(){
             jQuery.ajax({
-                    url : "http://localhost/cms-fixes/public/admin/category/create",
+                    url : "{{ url('admin/category/create') }}",
                     type : "POST",
                     data : {parent_cat : $sub_val,name : $('.name').val(), _token : $('#ctr_token').val() },
                     dataType: "json",
+                    success : function(data){
+                        // need to show json return message
+                    }
                
             });
         });
