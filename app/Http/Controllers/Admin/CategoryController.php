@@ -70,31 +70,29 @@ class CategoryController extends Controller
 
     // category added by Hnin
     public function save(Request $request)
-  {
-    $data = array(
-                    'title'=>$request->name,
-                    'parent_id'=>$request->parent_cat ,
-                   );
-    Category::insert($data);
-    return redirect()->route('admin.category');  // need to json return;
-  }
-
-
-  public function rev_edit($id)
-  {
-    global $cat;
-    $rev_out=Category::where('id','=',$id)->get();
-    if($rev_out[0]['parent_id']!=0){
-    $cat[]=$rev_out[0]['id'];
-    $this->rev_edit($rev_out[0]['parent_id']);
-    }
-    else
     {
-      $cat[]=$rev_out[0]['id'];
+      $data = array(
+                      'title'=>$request->name,
+                      'parent_id'=>$request->parent_cat ,
+              );
+      Category::insert($data);
+     return json_encode(["status"=>0,"message"=>"Has been created!!"]);
     }
-    //dd($cat);
-    return($cat);
-  }
+    public function rev_edit($id)
+    {
+      global $cat;
+      $rev_out=Category::where('id','=',$id)->get();
+      if($rev_out[0]['parent_id']!=0){
+      $cat[]=$rev_out[0]['id'];
+      $this->rev_edit($rev_out[0]['parent_id']);
+      }
+      else
+      {
+        $cat[]=$rev_out[0]['id'];
+      }
+      //dd($cat);
+      return($cat);
+    }
 
   public function edit($id)
   {
@@ -120,8 +118,12 @@ class CategoryController extends Controller
 
 
   public function sub_cat($id)
-  {
+  { 
+    return view('admin.category.sub_cat')->with('id',$id);
+  }
 
+  public function parameter_sub_cat($edit_id,$id)
+  { 
     return view('admin.category.sub_cat')->with('id',$id);
   }
 
@@ -150,7 +152,7 @@ class CategoryController extends Controller
         );
 
         Category::where('id','=', $request->id)->update($data);
-         return redirect()->back()->with('success','Category is successfully Uploaded!');
+       return json_encode(["status"=>0,"message"=>"Has been updated!!"]); 
   }
 
     public function delete($id)
