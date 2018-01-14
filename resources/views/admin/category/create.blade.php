@@ -17,17 +17,17 @@
 <div id="content" class="bodylayout"><!-- second common-->
   <div class="well">
         <div class="row">
-        	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-        		<h1 class="page-title txt-color-blueDark"><i class="fa fa-list-ul"></i> Category Create</h1>
-        	</div>	
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                <h1 class="page-title txt-color-blueDark"><i class="fa fa-list-ul"></i> Category Create</h1>
+            </div>  
         </div>
-    	<div class="row">
+        <div class="row">
              <!-- for success message -->
             @if ($message = Session::get('success'))
               <div class="alert alert-success">
                   <p>{{ $message }}</p>
               </div>
-             @endif			
+             @endif         
                 <div class="form-group add_category" style="margin-top: 30px;">
                     <input type="hidden" name="_token"  id="ctr_token" value="<?php echo csrf_token() ?>">
                     <label>Insert category</label>
@@ -41,7 +41,7 @@
                     <input type="button" class="btn btn-success product_save" value="Save">
                 </div>   
         </div>
-	</div>
+    </div>
 </div>
 
 @endsection
