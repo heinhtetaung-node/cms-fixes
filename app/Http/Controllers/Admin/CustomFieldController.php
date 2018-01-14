@@ -58,25 +58,19 @@ class CustomFieldController extends Controller
        //return json_encode(["status"=>0,"message"=>"success"]);
      }
 
-     // public function add_group($value='')
-     // {
-     //     return view("custom-field.add_group");
-     // }
-
      public function create()
      {
-         $fields=$_POST['cf_list'];
-         //return $fields;
+           $fields=$_POST['cf_list'];
+           //return $fields;
 
-         foreach ($fields as $key =>$value) {
-             if (empty($value)) {
-               return json_encode(["status"=>1,"message"=>$key." is empty !"]);
-                // return json_encode(["status"=>1,"message"=>"Please, fill all fields completely!"]);
-             }
-         }
+           foreach ($fields as $key =>$value) {
+               if (empty($value)) {
+                 return json_encode(["status"=>1,"message"=>$key." is empty !"]);
+               }
+           }
 
-         CustomField::insert($fields);
-         return json_encode(["status"=>0,"message"=>"Has been created!!"]);
+           CustomField::insert($fields);
+           return json_encode(["status"=>0,"message"=>"Has been created!!"]);
      }
 
      public function g_edit($id)
